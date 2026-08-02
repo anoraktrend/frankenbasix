@@ -14,8 +14,24 @@ what the style expects.
 
 ## Building Packages
 
-I would recommend cloning this git repo into /opt/frankenbasix and basix-packages into
-/opt/basix-packages, for a clean separation of the two repos.
+setup your repos.conf
+
+```diff
+  # /etc/bpm/repos.conf - package repositories, highest priority first
+  #
+  #    <name> <git url or absolute path> [branch]
+  #
+  # git entries are cloned into $BPM_REPODIR/<name> by `bpm pull`, absolute
+  # paths are used where they are, which is useful for local "overlays"
+  #
+  # the first repository providing a template wins, so a local overlay listed
+  # above core lets you shadow any package
+
+  #local /home/me/overlay
+  core https://github.com/kkrruumm/basix-packages.git main
++ frankenbasix https://github.com/anoraktrend/frankenbasix.git main
+```
+then, bpm pull && bpm update
 
 To add a new package:
 
