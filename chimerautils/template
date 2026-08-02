@@ -1,0 +1,16 @@
+pkg_name=chimerautils
+version=15.0.3
+revision=1
+build_style=meson
+short_desc="Chimera Linux core userland: BSD tools coreutils replacement"
+home_page="https://github.com/chimera-linux/chimerautils"
+license="BSD-2-Clause"
+dist_files="https://github.com/chimera-linux/chimerautils/archive/refs/tags/v${version}.tar.gz>chimerautils-${version}.tar.gz"
+checksum="99328cd8e8481a7a5ca8a3af86df5d353e4045b5e57aff09531650d43b46cf96"
+depends="acl attr bzip2 libedit libxo ncurses openssl xz zlib zstd"
+host_make_depends="bison flex meson pkgconf samurai"
+configure_args="
+    --libexecdir=/usr/lib/chimerautils
+    -Dchimera_realpath=enabled
+    -Dpam=disabled
+    -Dselinux=disabled"

@@ -1,0 +1,12 @@
+pkg_name=libedit
+version=20260512-3.1
+revision=1
+build_style=gnu-configure
+short_desc="BSD line editing library, readline replacement"
+home_page="https://www.thrysoee.dk/editline/"
+license="BSD-3-Clause"
+dist_files="https://www.thrysoee.dk/editline/libedit-${version}.tar.gz"
+checksum="15450c80b565a836c88498e528066b90075583224ee9e17241cba0141b01bf94"
+depends="ncurses"
+make_depends="ncurses"
+configure_args="--disable-examples"

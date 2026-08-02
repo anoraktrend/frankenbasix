@@ -1,0 +1,16 @@
+pkg_name=libxo
+version=1.7.5
+revision=1
+build_style=gnu-configure
+short_desc="Library for generating text, XML, JSON, and HTML output"
+home_page="https://github.com/Juniper/libxo"
+license="BSD-2-Clause"
+dist_files="https://github.com/Juniper/libxo/releases/download/${version}/libxo-${version}.tar.gz"
+checksum="cd95f5b0d3ef604275aef8e0f610087095369e68d934be8d0ff5ea2e223833db"
+configure_args="--disable-gettext --disable-libxo-options"
+host_make_depends="pkgconf"
+
+pre_configure() {
+    # libxo does not respect LDFLAGS, so hack it in
+    export CFLAGS="$CFLAGS $LDFLAGS"
+}

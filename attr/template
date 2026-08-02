@@ -1,0 +1,9 @@
+pkg_name=attr
+version=2.6.0
+revision=1
+build_style=gnu-configure
+short_desc="Tools for extended attributes on filesystem objects"
+home_page="https://savannah.nongnu.org/projects/attr"
+license="LGPL-2.1-or-later, GPL-2.0-or-later"
+dist_files="https://download.savannah.gnu.org/releases/attr/attr-${version}.tar.gz"
+checksum="e28d81106f95543b053c400b78402eaf8f65214a9b59c815b79fdf04fd9045bf"

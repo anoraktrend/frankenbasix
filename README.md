@@ -32,3 +32,8 @@ To maintain a local repository:
 ## Packages
 
 - `meta-frankenbasix` - a metapackage tying this spin together
+- `chimerautils` - Chimera Linux core userland (needs acl, attr, libedit, libxo)
+- `acl` - POSIX access control list tools (needs attr)
+- `attr` - extended attribute tools
+- `libxo` - text/XML/JSON/HTML output library
+- `libedit` - BSD line editing library
