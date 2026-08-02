@@ -1,0 +1,13 @@
+# build_style=zig-build - zig compiles and installs in one step, and does not
+# know about DESTDIR, so the prefix carries it instead
+# variables: zig_build_args (default -Doptimize=ReleaseSafe), make_install_args
+pkg_name=
+version=
+revision=1
+build_style=zig-build
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

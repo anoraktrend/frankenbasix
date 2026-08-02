@@ -1,0 +1,12 @@
+# build_style=R-cran - CRAN source package
+# variables: make_install_args
+pkg_name=
+version=
+revision=1
+build_style=R-cran
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

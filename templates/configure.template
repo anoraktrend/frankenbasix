@@ -1,0 +1,12 @@
+# build_style=configure - a hand written ./configure that is not autotools
+# variables: configure_args, configure_script, make_build_args, make_install_args
+pkg_name=
+version=
+revision=1
+build_style=configure
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

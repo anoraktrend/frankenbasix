@@ -1,0 +1,12 @@
+# build_style=scons
+# variables: make_build_args, make_check_args, make_install_args
+pkg_name=
+version=
+revision=1
+build_style=scons
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

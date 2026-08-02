@@ -1,0 +1,10 @@
+# build_style=meta - no sources, no build, the package is pure metadata
+# list your depends to pull in a whole set of packages at once
+pkg_name=
+version=
+revision=1
+build_style=meta
+short_desc=""
+home_page=""
+license=""
+depends=""

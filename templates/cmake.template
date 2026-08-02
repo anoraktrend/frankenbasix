@@ -1,0 +1,13 @@
+# build_style=cmake - configures into ./build
+# variables: configure_args, make_build_args, make_check_args, make_install_args,
+#            cmake_build_type (default Release)
+pkg_name=
+version=
+revision=1
+build_style=cmake
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

@@ -1,0 +1,16 @@
+# build_style=fetch - dist_files are installed as they are, never extracted
+# the template must provide do_install()
+pkg_name=
+version=
+revision=1
+build_style=fetch
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""
+
+do_install() {
+    die "build_style=fetch requires a do_install() in the template"
+}

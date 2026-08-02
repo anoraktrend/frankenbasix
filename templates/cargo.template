@@ -1,0 +1,15 @@
+# build_style=cargo - `cargo install` handles the staging, so DESTDIR is
+# expressed as the install root
+# variables: cargo_args, cargo_install_path, make_build_args, make_install_args
+# note: needs allow_network=yes unless the crates are vendored into the build tree
+pkg_name=
+version=
+revision=1
+build_style=cargo
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""
+allow_network=no

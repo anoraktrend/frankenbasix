@@ -1,0 +1,15 @@
+# build_style=haskell-stack
+# variables: stackage (resolver), make_build_args, make_check_args, make_install_args
+# note: usually needs allow_network=yes unless the package index and
+# dependencies are already vendored into the build tree
+pkg_name=
+version=
+revision=1
+build_style=haskell-stack
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""
+allow_network=no

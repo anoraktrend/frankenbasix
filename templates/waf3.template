@@ -1,0 +1,12 @@
+# build_style=waf3 - kept as a name only, waf runs under python3 either way
+# see waf.template
+pkg_name=
+version=
+revision=1
+build_style=waf3
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

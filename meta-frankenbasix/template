@@ -1,0 +1,10 @@
+# this is a metapackage for frankenbasix, list the packages you want
+# installed by default here
+pkg_name=meta-frankenbasix
+version=0.1
+revision=1
+build_style=meta
+short_desc="FrankenBasix metapackage"
+home_page="https://github.com/anoraktrend/frankenbasix"
+license="BSD-3-Clause"
+depends="b3sum bpm busybox curl git xz"

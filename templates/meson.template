@@ -1,0 +1,12 @@
+# build_style=meson - configures into ./build, builds with ninja
+# variables: meson_args, configure_args, make_build_args, make_check_args
+pkg_name=
+version=
+revision=1
+build_style=meson
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

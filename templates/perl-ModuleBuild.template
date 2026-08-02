@@ -1,0 +1,12 @@
+# build_style=perl-ModuleBuild - Module::Build
+# variables: configure_args, make_build_args, make_check_args, make_install_args
+pkg_name=
+version=
+revision=1
+build_style=perl-ModuleBuild
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

@@ -1,0 +1,34 @@
+# FrankenBasix
+
+a bunch of templates to make using basix nicer for me and other users.
+
+FrankenBasix is a spin of [basix-packages](https://github.com/kkrruumm/basix-packages),
+which uses the [bpm](https://github.com/kkrruumm/bpm) package manager.
+
+## FrankenBasix template guidelines
+
+basix-packages only uses a handful of bpm's build styles (gnu-configure, custom, meson,
+cmake, python3-pep517, gnu-makefile, configure). FrankenBasix ships a skeleton template for
+every build style bpm implements, so any package can be started without having to remember
+what the style expects.
+
+## Building Packages
+
+I would recommend cloning this git repo into /opt/frankenbasix and basix-packages into
+/opt/basix-packages, for a clean separation of the two repos.
+
+To add a new package:
+
+1. copy the matching skeleton out of `templates/` into a new package dir
+2. fill in pkg_name, version, revision, dist_files and checksum
+3. run `bpm build <pkgdir>` to build and `bpm install <pkgdir>` to install
+
+To maintain a local repository:
+
+1. run `bpm build` for each package
+2. copy the archives from `out/` into your repo dir
+3. point `/etc/bpm/repos.conf` at your repo dir and run `bpm sync`
+
+## Packages
+
+- `meta-frankenbasix` - a metapackage tying this spin together

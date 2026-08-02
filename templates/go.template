@@ -1,0 +1,13 @@
+# build_style=go
+# variables: go_package (what to build, default ./...; go_import_path accepted too),
+#            go_build_tags (-tags), go_ldflags (-ldflags), go_mod_mode (-mod=)
+pkg_name=
+version=
+revision=1
+build_style=go
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

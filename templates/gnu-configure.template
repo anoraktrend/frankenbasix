@@ -1,0 +1,13 @@
+# build_style=gnu-configure - autoconf style ./configure
+# variables: configure_args, make_build_args, make_check_args, make_install_args,
+#            make_build_target, make_check_target, make_install_target, configure_script
+pkg_name=
+version=
+revision=1
+build_style=gnu-configure
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

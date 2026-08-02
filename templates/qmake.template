@@ -1,0 +1,12 @@
+# build_style=qmake - Qt project files
+# variables: qmake_cmd (default qmake), configure_args, make_build_args, make_install_args
+pkg_name=
+version=
+revision=1
+build_style=qmake
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

@@ -1,0 +1,12 @@
+# build_style=gemspec - build a gem, then unpack it into the dest_dir
+# variables: gem_spec (default *.gemspec), make_install_args
+pkg_name=
+version=
+revision=1
+build_style=gemspec
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

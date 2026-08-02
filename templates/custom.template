@@ -1,0 +1,19 @@
+# build_style=custom - the template defines do_build / do_install itself
+# helpers: bbin, binstall, bmkdir, bln, bconf, bsed, blicense, die
+pkg_name=
+version=
+revision=1
+build_style=custom
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""
+
+do_build() { :; }
+
+do_install() {
+    bmkdir /usr/bin
+    bbin "$build_dir/foo"
+}

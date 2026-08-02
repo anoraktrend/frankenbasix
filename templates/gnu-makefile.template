@@ -1,0 +1,13 @@
+# build_style=gnu-makefile - plain makefile, no configure step
+# variables: make_build_args, make_check_args, make_install_args,
+#            make_build_target, make_check_target, make_install_target
+pkg_name=
+version=
+revision=1
+build_style=gnu-makefile
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""

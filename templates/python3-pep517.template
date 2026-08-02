@@ -1,0 +1,12 @@
+# build_style=python3-pep517 - PEP 517 wheel, installed with python-installer
+# variables: make_build_args, make_check_args, make_install_args
+pkg_name=
+version=
+revision=1
+build_style=python3-pep517
+short_desc=""
+home_page=""
+license=""
+dist_files=""
+checksum=""
+depends=""
