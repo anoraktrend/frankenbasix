@@ -12,6 +12,23 @@ depends="acl attr bzip2 openssl pcre2 util-linux xz zlib zstd"
 make_depends="acl attr bzip2 linux-headers openssl pcre2 util-linux xz zlib zstd"
 host_make_depends="bison flex gperf meson pkgconf python python-jinja2 samurai"
 
+use_flags="
+    seccomp pam libcrypt libcryptsetup kmod lz4 elfutils coredump idn
+    gcrypt gnutls microhttpd qrencode libfido2 tpm2 bpf-framework efi
+    bootloader man html apparmor polkit smack ima ipe utmp userdb
+    networkd resolve timesyncd logind hostnamed localed timedated
+    initrd firstboot sysusers tmpfiles hwdb randomseed backlight
+    vconsole rfkill repart sysupdate kernel-install
+"
+use_default="
+    +seccomp +pam +libcrypt +libcryptsetup +kmod +lz4 +elfutils +coredump
+    +idn +gcrypt +gnutls +microhttpd +qrencode +libfido2 +tpm2 +man +html
+    +smack +ima +ipe +utmp +userdb +networkd +resolve +timesyncd +logind
+    +hostnamed +localed +timedated +initrd +firstboot +sysusers +tmpfiles
+    +hwdb +randomseed +backlight +vconsole +rfkill +repart +sysupdate
+    +kernel-install -bpf-framework -efi -bootloader -apparmor -polkit
+"
+
 configure_args="
     -Dlibc=musl
     -Dacl=enabled
@@ -24,44 +41,58 @@ configure_args="
     -Dbzip2=enabled
     -Dxz=enabled
     -Dzstd=enabled
-    -Dapparmor=disabled
-    -Daudit=disabled
-    -Dbpf-framework=disabled
+    -Dxkbcommon=enabled
+    -Dglib=disabled
     -Ddbus=disabled
-    -Defi=disabled
-    -Delfutils=disabled
-    -Dgcrypt=disabled
-    -Dgnutls=disabled
-    -Dhomed=disabled
-    -Didn=disabled
-    -Dima=disabled
-    -Dimportd=disabled
-    -Dkmod=disabled
-    -Dlibarchive=disabled
-    -Dlibcrypt=disabled
-    -Dlibcryptsetup=disabled
-    -Dlibfido2=disabled
-    -Dlibiptc=disabled
-    -Dlz4=disabled
-    -Dman=false
-    -Dhtml=false
-    -Dmicrohttpd=disabled
     -Dp11kit=disabled
-    -Dpam=disabled
-    -Dpasswdqc=disabled
-    -Dpolkit=disabled
-    -Dpwquality=disabled
-    -Dqrencode=disabled
-    -Dremote=disabled
-    -Dseccomp=disabled
-    -Dselinux=disabled
-    -Dsmack=disabled
     -Dtranslations=disabled
-    -Dtpm2=disabled
-    -Dtpm=disabled
-    -Dxenctrl=disabled
-    -Dxkbcommon=disabled
-    -Dcoredump=disabled
     -Dquotacheck=disabled
-    -Dbootloader=disabled
-    -Dtests=false"
+    -Dtests=false
+    $(use_bool seccomp)
+    $(use_bool pam)
+    $(use_bool libcrypt)
+    $(use_bool libcryptsetup)
+    $(use_bool kmod)
+    $(use_bool lz4)
+    $(use_bool elfutils)
+    $(use_bool coredump)
+    $(use_bool idn)
+    $(use_bool gcrypt)
+    $(use_bool gnutls)
+    $(use_bool microhttpd)
+    $(use_bool qrencode)
+    $(use_bool libfido2)
+    $(use_bool tpm2)
+    $(use_bool tpm2 tpm)
+    $(use_bool bpf-framework)
+    $(use_bool efi)
+    $(use_bool bootloader)
+    $(use_bool man)
+    $(use_bool html)
+    $(use_bool apparmor)
+    $(use_bool polkit)
+    $(use_bool smack)
+    $(use_bool ima)
+    $(use_bool ipe)
+    $(use_bool utmp)
+    $(use_bool userdb)
+    $(use_bool networkd)
+    $(use_bool resolve)
+    $(use_bool timesyncd)
+    $(use_bool logind)
+    $(use_bool hostnamed)
+    $(use_bool localed)
+    $(use_bool timedated)
+    $(use_bool initrd)
+    $(use_bool firstboot)
+    $(use_bool sysusers)
+    $(use_bool tmpfiles)
+    $(use_bool hwdb)
+    $(use_bool randomseed)
+    $(use_bool backlight)
+    $(use_bool vconsole)
+    $(use_bool rfkill)
+    $(use_bool repart)
+    $(use_bool sysupdate)
+    $(use_bool kernel-install)
+"
