@@ -1,12 +1,6 @@
-fix realpath.cc using std::strlen/std::strcmp without <cstring>
-
-glibc pulls these in transitively via <cstdio>/<cstdlib>; musl does not.
-
 --- a/src.custom/realpath/realpath.cc
 +++ b/src.custom/realpath/realpath.cc
-@@ -31,6 +31,7 @@
- #include <filesystem>
- #include <utility>
+@@ -32,6 +32,7 @@
  #include <cstdio>
  #include <cstdlib>
  #include <cerrno>
