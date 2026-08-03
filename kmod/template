@@ -9,17 +9,17 @@ dist_files="https://github.com/kmod-project/kmod/archive/refs/tags/v${version}.t
 checksum="592d7a6672e8c2f32679e920c4ce7c69c2e6c351f813706a96ebcebfdbcb1112"
 depends="openssl xz zlib zstd"
 make_depends="openssl xz zlib zstd"
-host_make_depends="meson pkgconf samurai"
+host_make_depends="meson pkgconf samurai scdoc"
 
-use_flags="zstd xz zlib openssl tools"
-use_default="+zstd +xz +zlib +openssl +tools"
+use_flags="zstd xz zlib openssl tools man"
+use_default="+zstd +xz +zlib +openssl +tools +man"
 
 configure_args="
-    -Dmanpages=false
     -Ddocs=false
     -Dbuild-tests=false
     $(use_if zstd -Dzstd=enabled -Dzstd=disabled)
     $(use_if xz -Dxz=enabled -Dxz=disabled)
     $(use_if zlib -Dzlib=enabled -Dzlib=disabled)
     $(use_if openssl -Dopenssl=enabled -Dopenssl=disabled)
-    $(use_bool tools)"
+    $(use_bool tools)
+    $(use_bool man manpages)"
