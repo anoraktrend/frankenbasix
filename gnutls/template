@@ -11,11 +11,15 @@ depends="libidn2 libtasn1 nettle"
 make_depends="gmp libidn2 libtasn1 nettle"
 host_make_depends="pkgconf"
 
+use_flags="idn nls"
+use_default="+idn -nls"
+
 configure_args="
     --disable-doc
-    --disable-nls
     --disable-tests
     --disable-valgrind-tests
     --without-p11-kit
     --without-brotli
-    --without-zstd"
+    --without-zstd
+    $(use_enable nls)
+    $(use_with idn)"

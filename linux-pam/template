@@ -10,20 +10,23 @@ checksum="05b8e0d0831baa13ff3b3b40666440b56af98dcdb475818faee106f0593a6770"
 wrk_src="Linux-PAM-$version"
 host_make_depends="flex meson pkgconf samurai"
 
+use_flags="i18n audit econf logind elogind openssl pwaccess selinux nis pam_userdb pam_lastlog examples"
+use_default="+openssl -i18n -audit -econf -logind -elogind -pwaccess -selinux -nis -pam_userdb -pam_lastlog -examples"
+
 configure_args="
-    -Di18n=disabled
     -Ddocs=disabled
-    -Daudit=disabled
-    -Deconf=disabled
-    -Dlogind=disabled
-    -Delogind=disabled
-    -Dopenssl=disabled
-    -Dpwaccess=disabled
-    -Dselinux=disabled
-    -Dnis=disabled
-    -Dpam_userdb=disabled
-    -Dpam_lastlog=disabled
-    -Dexamples=false
+    $(use_if i18n -Di18n=enabled -Di18n=disabled)
+    $(use_if audit -Daudit=enabled -Daudit=disabled)
+    $(use_if econf -Deconf=enabled -Deconf=disabled)
+    $(use_if logind -Dlogind=enabled -Dlogind=disabled)
+    $(use_if elogind -Delogind=enabled -Delogind=disabled)
+    $(use_if openssl -Dopenssl=enabled -Dopenssl=disabled)
+    $(use_if pwaccess -Dpwaccess=enabled -Dpwaccess=disabled)
+    $(use_if selinux -Dselinux=enabled -Dselinux=disabled)
+    $(use_if nis -Dnis=enabled -Dnis=disabled)
+    $(use_if pam_userdb -Dpam_userdb=enabled -Dpam_userdb=disabled)
+    $(use_if pam_lastlog -Dpam_lastlog=enabled -Dpam_lastlog=disabled)
+    $(use_bool examples)
     -Dxtests=false
     -Dsecuredir=/usr/lib/security
     -Dsconfigdir=/etc/pam.d

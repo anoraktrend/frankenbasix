@@ -11,8 +11,13 @@ depends="curl json-c openssl util-linux"
 make_depends="curl json-c openssl uthash util-linux"
 host_make_depends="pkgconf"
 
+use_flags="fapi unit"
+use_default="+fapi -unit"
+
 configure_args="
     --disable-doxygen-doc
     --disable-doxygen-html
     --disable-doxygen-man
-    --disable-doxygen-rtf"
+    --disable-doxygen-rtf
+    $(use_enable fapi)
+    $(use_enable unit)"

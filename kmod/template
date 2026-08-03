@@ -11,7 +11,15 @@ depends="openssl xz zlib zstd"
 make_depends="openssl xz zlib zstd"
 host_make_depends="meson pkgconf samurai"
 
+use_flags="zstd xz zlib openssl tools"
+use_default="+zstd +xz +zlib +openssl +tools"
+
 configure_args="
     -Dmanpages=false
     -Ddocs=false
-    -Dbuild-tests=false"
+    -Dbuild-tests=false
+    $(use_if zstd -Dzstd=enabled -Dzstd=disabled)
+    $(use_if xz -Dxz=enabled -Dxz=disabled)
+    $(use_if zlib -Dzlib=enabled -Dzlib=disabled)
+    $(use_if openssl -Dopenssl=enabled -Dopenssl=disabled)
+    $(use_bool tools)"

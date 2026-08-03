@@ -10,6 +10,9 @@ checksum="2f509b025f5c13200468bb843bd3f38ae148d33939051b27a4fb4565646cafce"
 depends="libunistring"
 make_depends="libunistring"
 
+use_flags="nls"
+use_default="-nls"
+
 configure_args="
     --disable-doc
-    --disable-nls"
+    $(use_enable nls)"
