@@ -8,9 +8,9 @@ license="LGPL-2.1-or-later"
 dist_files="https://github.com/systemd/systemd/archive/refs/tags/v${version}.tar.gz>systemd-${version}.tar.gz"
 checksum="7352f4c878324176fcefae233d4f9aeab6319b48b594bb23a0ddc38289ec26c6"
 wrk_src="systemd-$version"
-depends="acl attr bzip2 openssl pcre2 util-linux xz zlib zstd"
-make_depends="acl attr bzip2 linux-headers openssl pcre2 util-linux xz zlib zstd"
-host_make_depends="bison flex gperf meson pkgconf python python-jinja2 samurai"
+depends="acl attr bzip2 kmod libelf libfido2 libgcrypt gnutls libidn2 linux-pam libmicrohttpd libqrencode libseccomp libucontext lz4 openssl pcre2 tpm2-tss util-linux xz zlib zstd"
+make_depends="acl attr bzip2 kmod libelf libfido2 libgcrypt gnutls libidn2 linux-headers linux-pam libmicrohttpd libqrencode libseccomp libucontext lz4 openssl pcre2 tpm2-tss util-linux xz zlib zstd"
+host_make_depends="bison docbook-xsl flex gperf libxslt meson pkgconf python python-jinja2 samurai"
 
 use_flags="
     seccomp pam libcrypt libcryptsetup kmod lz4 elfutils coredump idn
@@ -26,7 +26,7 @@ use_default="
     +smack +ima +ipe +utmp +userdb +networkd +resolve +timesyncd +logind
     +hostnamed +localed +timedated +initrd +firstboot +sysusers +tmpfiles
     +hwdb +randomseed +backlight +vconsole +rfkill +repart +sysupdate
-    +kernel-install -bpf-framework -efi -bootloader -apparmor -polkit
+    +kernel-install +bpf-framework -efi -bootloader -apparmor -polkit
 "
 
 configure_args="
