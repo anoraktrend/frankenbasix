@@ -1,0 +1,21 @@
+pkg_name=gnutls
+version=3.8.13
+revision=1
+build_style=gnu-configure
+short_desc="TLS/SSL and crypto library (GnuTLS)"
+home_page="https://www.gnutls.org/"
+license="LGPL-2.1-or-later"
+dist_files="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${version}.tar.xz"
+checksum="817083bbd1af9caab9e30602ea01e4254200252289ca966770beff05fb26b2de"
+depends="libidn2 libtasn1 nettle"
+make_depends="gmp libidn2 libtasn1 nettle"
+host_make_depends="pkgconf"
+
+configure_args="
+    --disable-doc
+    --disable-nls
+    --disable-tests
+    --disable-valgrind-tests
+    --without-p11-kit
+    --without-brotli
+    --without-zstd"

@@ -1,0 +1,14 @@
+pkg_name=libgpg-error
+version=1.61
+revision=1
+build_style=gnu-configure
+short_desc="Error handling and reporting library for GnuPG components"
+home_page="https://gnupg.org/software/libgpg-error/"
+license="LGPL-2.1-or-later"
+dist_files="https://www.gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-${version}.tar.gz"
+checksum="72101618852e9a22f487408b6ca78b67ef694faa8b03429ddded35b1b9998096"
+
+configure_args="
+    --disable-doc
+    --disable-languages
+    --disable-nls"

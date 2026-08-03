@@ -1,0 +1,14 @@
+pkg_name=libcbor
+version=0.14.0
+revision=1
+build_style=cmake
+short_desc="CBOR (RFC 8949) serialization library"
+home_page="https://libcbor.org/"
+license="MIT"
+dist_files="https://github.com/PJK/libcbor/archive/refs/tags/v${version}.tar.gz"
+checksum="9dd463c133914280ee2943676e6ed952b8dab6853deb23804e43df04e62320b1"
+host_make_depends="cmake pkgconf"
+
+configure_args="
+    -DWITH_TESTS=OFF
+    -DWITH_EXAMPLES=OFF"

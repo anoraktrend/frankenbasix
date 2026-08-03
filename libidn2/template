@@ -1,0 +1,15 @@
+pkg_name=libidn2
+version=2.3.8
+revision=1
+build_style=gnu-configure
+short_desc="Internationalized domain names (IDNA2008) library"
+home_page="https://www.gnu.org/software/libidn/"
+license="LGPL-3.0-or-later"
+dist_files="https://mirrors.edge.kernel.org/gnu/libidn/libidn2-${version}.tar.gz"
+checksum="2f509b025f5c13200468bb843bd3f38ae148d33939051b27a4fb4565646cafce"
+depends="libunistring"
+make_depends="libunistring"
+
+configure_args="
+    --disable-doc
+    --disable-nls"

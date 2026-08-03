@@ -1,0 +1,15 @@
+pkg_name=libbpf
+version=1.7.0
+revision=1
+build_style=gnu-makefile
+short_desc="BPF CO-RE (Compile Once, Run Everywhere) library"
+home_page="https://github.com/libbpf/libbpf"
+license="LGPL-2.1-or-later"
+dist_files="https://github.com/libbpf/libbpf/archive/refs/tags/v${version}.tar.gz"
+checksum="5d105646b12bdd55878739affabfefc41f1063a9dab7cd5584d5c14a166b7899"
+depends="libelf"
+make_depends="libelf linux-headers zlib"
+host_make_depends="clang pkgconf"
+
+make_build_target="-C src"
+make_install_target="-C src install"

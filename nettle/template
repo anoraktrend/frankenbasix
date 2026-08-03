@@ -1,0 +1,15 @@
+pkg_name=nettle
+version=3.10.2
+revision=1
+build_style=gnu-configure
+short_desc="Low-level cryptographic library (GNU Nettle)"
+home_page="https://www.lysator.liu.se/~nisse/nettle/"
+license="LGPL-3.0-or-later"
+dist_files="https://mirrors.edge.kernel.org/gnu/nettle/nettle-${version}.tar.gz"
+checksum="c6ff393796e76cdcc49b0d825b7f36357f4efc9dc74f4d718b62f347714b944f"
+depends="gmp"
+make_depends="gmp"
+
+configure_args="
+    --disable-openssl
+    --disable-documentation"

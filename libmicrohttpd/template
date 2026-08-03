@@ -1,0 +1,15 @@
+pkg_name=libmicrohttpd
+version=1.0.9
+revision=1
+build_style=gnu-configure
+short_desc="C library for embedding an HTTP server"
+home_page="https://www.gnu.org/software/libmicrohttpd/"
+license="LGPL-2.1-or-later"
+dist_files="https://mirrors.edge.kernel.org/gnu/libmicrohttpd/libmicrohttpd-${version}.tar.gz"
+checksum="c9bca077ad105013aa5f4406a41687ce2e982fe502aabff7a8b05b913de01c54"
+
+configure_args="
+    --disable-curl
+    --disable-https
+    --disable-doc
+    --disable-examples"

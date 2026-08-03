@@ -1,0 +1,18 @@
+pkg_name=libucontext
+version=1.5.2
+revision=1
+build_style=custom
+short_desc="Provide an implementation of the ucontext API for musl libc"
+home_page="https://github.com/kaniini/libucontext"
+license="ISC"
+dist_files="https://github.com/kaniini/libucontext/archive/refs/tags/libucontext-${version}.tar.gz"
+checksum="6da2255a8199f37992dae96e249f3b4eff900dc47f37a4a458b0cbe5008e55ec"
+wrk_src="libucontext-libucontext-$version"
+
+do_build() {
+    make ${make_build_args:-}
+}
+
+do_install() {
+    make DESTDIR="$DESTDIR" install
+}

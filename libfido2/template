@@ -1,0 +1,19 @@
+pkg_name=libfido2
+version=1.17.0
+revision=1
+build_style=cmake
+short_desc="FIDO2/U2F host library"
+home_page="https://developers.yubico.com/libfido2/"
+license="BSD-2-Clause"
+dist_files="https://github.com/Yubico/libfido2/archive/refs/tags/${version}.tar.gz"
+checksum="77c866c7e5e50b387ef26ef40a5bb20c81199ce67237533b226205bf263456ed"
+depends="libcbor openssl zlib"
+make_depends="libcbor openssl zlib"
+host_make_depends="cmake pkgconf"
+
+configure_args="
+    -DUSE_HIDAPI=OFF
+    -DBUILD_TOOLS=OFF
+    -DBUILD_EXAMPLES=OFF
+    -DBUILD_MANPAGES=OFF
+    -DBUILD_STATIC_LIBS=OFF"

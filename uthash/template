@@ -1,0 +1,18 @@
+pkg_name=uthash
+version=2.4.0
+revision=1
+build_style=custom
+short_desc="C preprocessor hash table, linked list and string buffer macros"
+home_page="https://troydhanson.github.io/uthash/"
+license="BSD-1-Clause"
+dist_files="https://github.com/troydhanson/uthash/archive/refs/tags/v${version}.tar.gz"
+checksum="74e59d1dd38feeae0bb731ddfe46989cc91935eaec9711026707b43588cb33b8"
+wrk_src="uthash-$version"
+
+do_build() {
+    :
+}
+
+do_install() {
+    install -Dm644 src/uthash.h "$DESTDIR/usr/include/uthash.h"
+}
