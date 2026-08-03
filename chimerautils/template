@@ -10,8 +10,21 @@ checksum="99328cd8e8481a7a5ca8a3af86df5d353e4045b5e57aff09531650d43b46cf96"
 depends="acl attr bzip2 libedit libxo ncurses openssl xz zlib zstd"
 make_depends="acl attr bzip2 libedit libxo ncurses openssl xz zlib zstd"
 host_make_depends="bison flex meson pkgconf samurai"
+
+use_flags="color_ls openssl libedit zlib lzma bzip2 zstd pam tiny chimera_realpath install-lib selinux"
+use_default="+color_ls +openssl +libedit +zlib +lzma +bzip2 +zstd -pam -tiny +chimera_realpath +install-lib -selinux"
+
 configure_args="
     --libexecdir=/usr/lib/chimerautils
-    -Dchimera_realpath=enabled
-    -Dpam=disabled
-    -Dselinux=disabled"
+    $(use_bool color_ls)
+    $(use_if openssl -Dopenssl=enabled -Dopenssl=disabled)
+    $(use_if libedit -Dlibedit=enabled -Dlibedit=disabled)
+    $(use_if zlib -Dzlib=enabled -Dzlib=disabled)
+    $(use_if lzma -Dlzma=enabled -Dlzma=disabled)
+    $(use_if bzip2 -Dbzip2=enabled -Dbzip2=disabled)
+    $(use_if zstd -Dzstd=enabled -Dzstd=disabled)
+    $(use_if pam -Dpam=enabled -Dpam=disabled)
+    $(use_if tiny -Dtiny=enabled -Dtiny=disabled)
+    $(use_if chimera_realpath -Dchimera_realpath=enabled -Dchimera_realpath=disabled)
+    $(use_bool install-lib)
+    $(use_if selinux -Dselinux=enabled -Dselinux=disabled)"
