@@ -12,7 +12,7 @@ make_depends="openssl xz zlib zstd"
 host_make_depends="meson pkgconf samurai scdoc"
 
 use_flags="zstd xz zlib openssl tools man"
-use_default="+zstd +xz +zlib +openssl +tools +man"
+use_default="+zstd +xz +zlib +openssl +tools -man"
 
 configure_args="
     -Ddocs=false

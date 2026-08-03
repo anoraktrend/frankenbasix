@@ -15,14 +15,14 @@ host_make_depends="bison docbook-xsl flex gperf libxslt meson pkgconf python pyt
 use_flags="
     seccomp pam libcrypt libcryptsetup kmod lz4 elfutils coredump idn
     gcrypt gnutls microhttpd qrencode libfido2 tpm2 bpf-framework efi
-    bootloader man html apparmor polkit smack ima ipe utmp userdb
+    bootloader man doc apparmor polkit smack ima ipe utmp userdb
     networkd resolve timesyncd logind hostnamed localed timedated
     initrd firstboot sysusers tmpfiles hwdb randomseed backlight
     vconsole rfkill repart sysupdate kernel-install
 "
 use_default="
     +seccomp +pam +libcrypt +libcryptsetup +kmod +lz4 +elfutils +coredump
-    +idn +gcrypt +gnutls +microhttpd +qrencode +libfido2 +tpm2 +man +html
+    +idn +gcrypt +gnutls +microhttpd +qrencode +libfido2 +tpm2 -man -doc
     +smack +ima +ipe +utmp +userdb +networkd +resolve +timesyncd +logind
     +hostnamed +localed +timedated +initrd +firstboot +sysusers +tmpfiles
     +hwdb +randomseed +backlight +vconsole +rfkill +repart +sysupdate
@@ -68,7 +68,7 @@ configure_args="
     $(use_bool efi)
     $(use_bool bootloader)
     $(use_bool man)
-    $(use_bool html)
+    $(use_bool doc html)
     $(use_bool apparmor)
     $(use_bool polkit)
     $(use_bool smack)
