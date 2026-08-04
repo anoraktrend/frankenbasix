@@ -9,6 +9,7 @@ dist_files="https://mirrors.edge.kernel.org/gnu/nettle/nettle-${version}.tar.gz"
 checksum="c6ff393796e76cdcc49b0d825b7f36357f4efc9dc74f4d718b62f347714b944f"
 depends="gmp"
 make_depends="gmp"
+host_make_depends="m4"
 
 configure_args="
     --disable-openssl
