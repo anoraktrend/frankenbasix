@@ -10,7 +10,7 @@ checksum="7352f4c878324176fcefae233d4f9aeab6319b48b594bb23a0ddc38289ec26c6"
 wrk_src="systemd-$version"
 depends="acl attr bzip2 cryptsetup kmod libbpf libelf libfido2 libgcrypt libxkbcommon gnutls libidn2 linux-pam libmicrohttpd libqrencode libseccomp libucontext lz4 openssl pcre2 python-elftools tpm2-tss util-linux xz zlib zstd"
 make_depends="acl attr bzip2 cryptsetup kmod libbpf libelf libfido2 libgcrypt libxkbcommon gnutls libidn2 linux-headers linux-pam libmicrohttpd libqrencode libseccomp libucontext lz4 openssl pcre2 tpm2-tss util-linux xz zlib zstd"
-host_make_depends="bison clang docbook-xsl flex gperf libxslt meson pkgconf python python-elftools python-jinja2 samurai"
+host_make_depends="bison clang docbook-xsl llvm-binutils flex gperf libxslt meson pkgconf python python-elftools python-jinja2 samurai"
 
 use_flags="
     seccomp pam libcrypt libcryptsetup kmod lz4 elfutils coredump idn
