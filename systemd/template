@@ -46,7 +46,7 @@ configure_args="
     -Ddbus=disabled
     -Dp11kit=disabled
     -Dtranslations=false
-    -Dquotacheck=disabled
+    -Dquotacheck=false
     -Dtests=false
     $(use_if seccomp -Dseccomp=enabled -Dseccomp=disabled)
     $(use_if pam -Dpam=enabled -Dpam=disabled)
