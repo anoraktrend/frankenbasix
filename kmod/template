@@ -1,6 +1,6 @@
 pkg_name=kmod
 version=34
-revision=1
+revision=2
 build_style=meson
 short_desc="Kernel module tools and libkmod library"
 home_page="https://github.com/kmod-project/kmod"

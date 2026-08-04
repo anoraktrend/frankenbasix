@@ -1,0 +1,11 @@
+--- a/scripts/build-scdoc.sh
++++ b/scripts/build-scdoc.sh
+@@ -1,6 +1,6 @@
+-#!/bin/bash
++#!/bin/sh
+ 
+-set -euo pipefail
++set -eu
+ 
+ SCDOC=$1
+ INPUT=$2
