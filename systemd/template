@@ -29,6 +29,16 @@ use_default="
     +kernel-install +bpf-framework +efi +bootloader -apparmor -polkit
 "
 
+pre_build() {
+    mkdir -p "$wrksrc/bin"
+    cat > "$wrksrc/bin/printf" <<'EOF'
+#!/bin/sh
+exec bash -c 'printf "$@"' -- "$@"
+EOF
+    chmod +x "$wrksrc/bin/printf"
+    export PATH="$wrksrc/bin:$PATH"
+}
+
 configure_args="
     -Dlibc=musl
     -Dacl=enabled
