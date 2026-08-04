@@ -10,6 +10,7 @@ checksum="288a4623fea10e351f8612987aea7e69542e76fbd60e9fbf1d96beaae61fa726"
 wrk_src="linux-${version}"
 
 make_depends="libelf zlib openssl"
+host_make_depends="python"
 
 do_build() {
     $make_cmd -C tools/bpf/bpftool
