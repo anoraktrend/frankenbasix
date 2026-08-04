@@ -12,4 +12,8 @@ make_depends="libelf linux-headers zlib"
 host_make_depends="clang pkgconf"
 
 make_build_target="-C src"
-make_install_target="-C src install"
+
+do_install() {
+    $make_cmd DESTDIR="$DESTDIR" PREFIX=/usr \
+        -C src install
+}
