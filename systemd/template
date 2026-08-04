@@ -30,13 +30,13 @@ use_default="
 "
 
 pre_build() {
-    mkdir -p "$wrksrc/bin"
-    cat > "$wrksrc/bin/printf" <<'EOF'
+    mkdir -p "$wrk_src/bin"
+    cat > "$wrk_src/bin/printf" <<'EOF'
 #!/bin/sh
 exec bash -c 'printf "$@"' -- "$@"
 EOF
-    chmod +x "$wrksrc/bin/printf"
-    export PATH="$wrksrc/bin:$PATH"
+    chmod +x "$wrk_src/bin/printf"
+    export PATH="$wrk_src/bin:$PATH"
 }
 
 configure_args="
