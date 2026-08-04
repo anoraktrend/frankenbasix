@@ -1,0 +1,20 @@
+pkg_name=bpftool
+version=6.18.39
+revision=1
+build_style=custom
+short_desc="Linux kernel BPF tool"
+home_page="https://kernel.org"
+license="GPL-2.0-only"
+dist_files="https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-${version}.tar.xz"
+checksum="288a4623fea10e351f8612987aea7e69542e76fbd60e9fbf1d96beaae61fa726"
+wrk_src="linux-${version}"
+
+make_depends="libelf zlib openssl"
+
+do_build() {
+    $make_cmd -C tools/bpf/bpftool
+}
+
+do_install() {
+    $make_cmd -C tools/bpf/bpftool install DESTDIR="$DESTDIR" prefix=/usr
+}

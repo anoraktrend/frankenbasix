@@ -20,6 +20,7 @@ configure_args="
     -DLLVM_INCLUDE_TESTS=OFF
     -DLLD_INCLUDE_TESTS=OFF
     -DLLD_INCLUDE_DOCS=OFF
+    -DWITH_WERROR=OFF
     -Wno-dev"
 
 post_install() {
@@ -34,4 +35,5 @@ post_install() {
     bln llvm-strings /usr/bin/strings
     bln llvm-size /usr/bin/size
     bln llvm-dwarfdump /usr/bin/dwarfdump
+    bln llvm-readobj /usr/bin/readobj
 }
