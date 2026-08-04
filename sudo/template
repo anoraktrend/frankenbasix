@@ -1,0 +1,27 @@
+pkg_name=sudo
+version=1.9.17p2
+revision=1
+build_style=gnu-configure
+short_desc="Allow others to run commands as root"
+home_page="https://www.sudo.ws"
+license="ISC"
+dist_files="https://github.com/sudo-project/sudo/releases/download/v${version}/sudo-${version}.tar.gz"
+checksum="f9c0de7ccd015d8ac93f8de1e0151877962a6bcac94857fac9708b61bb962b64"
+depends="linux-pam openssl"
+make_depends="linux-pam openssl"
+
+use_flags="pam openssl"
+use_default="+pam +openssl"
+
+configure_args="
+    --with-env-editor
+    --enable-shell-sets-home
+    --enable-noargs-shell
+    --without-sendmail
+    --enable-pie
+    --with-mdoc
+    --disable-log-server
+    --disable-zlib
+    --with-secure-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    $(use_with pam)
+    $(use_enable openssl)"
