@@ -5,6 +5,6 @@ build_style=gnu-configure
 short_desc="Linux syscall filtering API"
 home_page="https://github.com/seccomp/libseccomp"
 license="LGPL-2.1-or-later"
-make_deps="python gperf"
+host_make_depends="python gperf"
 dist_files="https://github.com/seccomp/libseccomp/releases/download/v${version}/libseccomp-${version}.tar.gz"
 checksum="5d146c18fad8a822ae05bfe27627eccdb32eceae03562db9b28d8bf61f976bf5"
