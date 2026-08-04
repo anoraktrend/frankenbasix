@@ -45,7 +45,7 @@ configure_args="
     -Dglib=disabled
     -Ddbus=disabled
     -Dp11kit=disabled
-    -Dtranslations=disabled
+    -Dtranslations=false
     -Dquotacheck=disabled
     -Dtests=false
     $(use_if seccomp -Dseccomp=enabled -Dseccomp=disabled)
