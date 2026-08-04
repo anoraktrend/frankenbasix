@@ -1,0 +1,25 @@
+pkg_name=muon
+version=0.6.0
+revision=1
+build_style=custom
+short_desc="Small self-contained implementation of the meson build system in C"
+home_page="https://muon.build"
+license="GPL-3.0-only"
+dist_files="https://git.sr.ht/~lattis/muon/archive/${version}.tar.gz"
+checksum="d3797c288cb4156cd1e20a8a0082391dd1eb6f6282ac66cc4c0ed167fc96f0da"
+wrk_src="muon-${version}"
+
+do_build() {
+    mkdir -p bld
+    ${CC:-cc} $CFLAGS $LDFLAGS -Iinclude src/amalgam.c -o bld/muon-bootstrap
+    ./bld/muon-bootstrap build \
+        -Dprefix=/usr -Dlibdir=lib -Dsysconfdir=/etc -Dlocalstatedir=/var \
+        -Dlibcurl=disabled -Dlibarchive=disabled -Dlibpkgconf=disabled \
+        -Dman-pages=disabled -Dmeson-docs=disabled -Dmeson-tests=disabled \
+        -Dwebsite=disabled -Dbuildtype=release \
+        bld
+}
+
+do_install() {
+    ./bld/muon -C bld install -d "$DESTDIR"
+}
