@@ -9,7 +9,8 @@ dist_files="https://mirrors.edge.kernel.org/pub/linux/kernel/v6.x/linux-${versio
 checksum="288a4623fea10e351f8612987aea7e69542e76fbd60e9fbf1d96beaae61fa726"
 wrk_src="linux-${version}"
 
-make_depends="libelf zlib openssl"
+depends="libelf zlib openssl libbpf llvm"
+make_depends="libelf zlib openssl libbpf llvm"
 host_make_depends="python"
 
 do_build() {
