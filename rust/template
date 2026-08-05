@@ -3,7 +3,7 @@
 # never touches the network
 pkg_name=rust
 version=1.93.1
-revision=2
+revision=3
 build_style=custom
 short_desc="Rust programming language toolchain"
 home_page="https://www.rust-lang.org"
@@ -13,7 +13,7 @@ checksum="c8f492b93a95d64efb51fbcc5eab1e8edc1468a3f5be923c756b69d66892161a"
 wrk_src="rustc-$version-src"
 
 depends="gcc zlib libressl llvm llvm-binutils clang sccache"
-host_make_depends="rust-bootstrap cmake samurai python gcc libressl sccache"
+host_make_depends="rust-bootstrap cmake samurai python gcc libressl sccache zlib llvm llvm-binutils clang"
 
 # rustc links against its own std, stripping the toolchain is not supported
 no_strip=yes
