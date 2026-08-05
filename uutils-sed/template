@@ -1,0 +1,13 @@
+pkg_name=uutils-sed
+version=0.1.1
+revision=1
+build_style=cargo
+short_desc="sed implemented in Rust (uutils)"
+home_page="https://github.com/uutils/sed"
+license="MIT"
+dist_files="https://github.com/uutils/sed/archive/refs/tags/${version}.tar.gz>sed-${version}.tar.gz"
+checksum="0c112ecf8a2b717079675a98a3fcf04f0707ad1398c4bf76f875c4e628c7f49b"
+wrk_src="sed-${version}"
+depends=""
+host_make_depends="rust"
+allow_network=yes
