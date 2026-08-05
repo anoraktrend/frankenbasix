@@ -9,7 +9,10 @@ build_style=custom
 short_desc="Rust FFI bindings generator"
 home_page="https://github.com/rust-lang/rust-bindgen"
 license="BSD-3-Clause"
-dist_files="https://static.crates.io/crates/bindgen-cli/bindgen-cli-${version}.crate"
+# bpm only auto-extracts .tar*/.zip distfiles, so the crates.io .crate (a
+# tar.gz) is fetched under a .tar.gz name; the archive itself still unpacks
+# to bindgen-cli-<version>/ which is what wrk_src points at
+dist_files="https://static.crates.io/crates/bindgen-cli/bindgen-cli-${version}.crate>bindgen-${version}.tar.gz"
 checksum="553d230420c015a365fdb538e3045568d8e1192058cfb75c128f42beefb4363e"
 wrk_src="bindgen-cli-$version"
 
