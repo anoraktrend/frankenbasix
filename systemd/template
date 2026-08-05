@@ -30,15 +30,15 @@ use_default="
 "
 
 pre_configure() {
-    # busybox/coreutils printf lacks bash %q; meson's internal test/catalog
-    # generation uses `find_program('printf')` -> /usr/bin/printf at configure time.
-    # Override it in the buildroot before meson runs.
-    mkdir -p "$BPM_BUILDROOT/$pkg_name/root/usr/bin"
-    cat > "$BPM_BUILDROOT/$pkg_name/root/usr/bin/printf" <<'EOF'
+    # busybox printf lacks bash's %q that meson's systemd-runtest.env
+    # generation needs; meson resolves find_program('printf') to /usr/bin/printf
+    # at configure time, so install a bash-backed wrapper before it runs.
+    # (this runs inside the buildroot chroot, so /usr/bin is the buildroot root)
+    cat > /usr/bin/printf <<'EOF'
 #!/bin/sh
 exec bash -c 'printf "$@"' -- "$@"
 EOF
-    chmod +x "$BPM_BUILDROOT/$pkg_name/root/usr/bin/printf"
+    chmod +x /usr/bin/printf
 }
 
 configure_args="
