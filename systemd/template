@@ -33,7 +33,10 @@ pre_configure() {
     # busybox printf lacks bash's %q that meson's systemd-runtest.env
     # generation needs; meson resolves find_program('printf') to /usr/bin/printf
     # at configure time, so install a bash-backed wrapper before it runs.
-    # (this runs inside the buildroot chroot, so /usr/bin is the buildroot root)
+    # (runs inside the buildroot chroot, so /usr/bin is the buildroot root)
+    # rm first: /usr/bin/printf is a symlink to the running busybox binary,
+    # overwriting it would give ETXTBSY.
+    rm -f /usr/bin/printf
     cat > /usr/bin/printf <<'EOF'
 #!/bin/sh
 exec bash -c 'printf "$@"' -- "$@"
