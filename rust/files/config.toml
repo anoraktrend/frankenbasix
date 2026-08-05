@@ -20,7 +20,10 @@ vendor = true
 submodules = false
 docs = false
 extended = true
-tools = ["cargo", "rust-src", "rustdoc", "rustfmt", "clippy"]
+# "src" (not "rust-src") is the exact name the install step checks for
+# (bootstrap install.rs: Src::is_default_step does tools.contains("src")),
+# without it the rust-src component never gets installed
+tools = ["cargo", "rust-src", "src", "rustdoc", "rustfmt", "clippy"]
 
 [install]
 prefix = "/usr"

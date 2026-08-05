@@ -3,7 +3,7 @@
 # never touches the network
 pkg_name=rust
 version=1.93.1
-revision=3
+revision=4
 build_style=custom
 short_desc="Rust programming language toolchain"
 home_page="https://www.rust-lang.org"
