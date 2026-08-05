@@ -29,14 +29,16 @@ use_default="
     +kernel-install +bpf-framework +efi +bootloader -apparmor -polkit
 "
 
-pre_build() {
-    mkdir -p "$wrk_src/bin"
-    cat > "$wrk_src/bin/printf" <<'EOF'
+pre_configure() {
+    # busybox/coreutils printf lacks bash %q; meson's internal test/catalog
+    # generation uses `find_program('printf')` -> /usr/bin/printf at configure time.
+    # Override it in the buildroot before meson runs.
+    mkdir -p "$BPM_BUILDROOT/$pkg_name/root/usr/bin"
+    cat > "$BPM_BUILDROOT/$pkg_name/root/usr/bin/printf" <<'EOF'
 #!/bin/sh
 exec bash -c 'printf "$@"' -- "$@"
 EOF
-    chmod +x "$wrk_src/bin/printf"
-    export PATH="$wrk_src/bin:$PATH"
+    chmod +x "$BPM_BUILDROOT/$pkg_name/root/usr/bin/printf"
 }
 
 configure_args="
