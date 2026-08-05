@@ -20,7 +20,7 @@ vendor = true
 submodules = false
 docs = false
 extended = true
-tools = ["cargo", "rust-src"]
+tools = ["cargo", "rust-src", "rustdoc", "rustfmt", "clippy"]
 
 [install]
 prefix = "/usr"
