@@ -1,0 +1,46 @@
+# LibreSSL - OpenBSD's OpenSSL fork. Coexists with the openssl package: the
+# versioned shared libraries (libssl.so.60, libcrypto.so.57, libtls.so.33)
+# live in /usr/lib next to openssl's libssl.so.4 without clashing, while the
+# libssl.so/libcrypto.so/libtls.so dev symlinks and pkg-config files go into
+# /usr/lib/libressl so nothing collides with the openssl package. Headers go
+# to /usr/include/libressl.
+#
+# Pinned to 4.2.x: the vendored openssl-sys in rust 1.93.1 supports LibreSSL
+# 3.5 through 4.2.x, and the rust package links cargo against these
+# libraries (see rust/files/config.toml [env]).
+pkg_name=libressl
+version=4.2.1
+revision=1
+build_style=gnu-configure
+short_desc="TLS/SSL and crypto library forked from OpenSSL by OpenBSD"
+home_page="https://www.libressl.org"
+license="ISC"
+dist_files="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${version}.tar.gz"
+checksum="73bd7c056226fc2e1dba9154af48d91edce5269512980c0225e35e76b950ede1"
+configure_args="--includedir=/usr/include/libressl --disable-tests --disable-static"
+
+do_install() {
+    $make_cmd DESTDIR="$DESTDIR" install
+
+    # make room for the openssl package: no CLI, /etc/ssl files or man pages
+    rm -f "$DESTDIR/usr/bin/openssl"
+    rm -rf "$DESTDIR/etc/ssl"
+    rm -rf "$DESTDIR/usr/share/man"
+    rm -f "$DESTDIR/usr/lib/"*.la
+
+    # keep the dev symlinks and pkg-config files out of /usr/lib, the
+    # openssl package owns those names there; they still resolve to the
+    # versioned libraries in /usr/lib
+    _ssl=$(readlink "$DESTDIR/usr/lib/libssl.so")
+    _crypto=$(readlink "$DESTDIR/usr/lib/libcrypto.so")
+    _tls=$(readlink "$DESTDIR/usr/lib/libtls.so")
+    rm -f "$DESTDIR/usr/lib/libssl.so" "$DESTDIR/usr/lib/libcrypto.so" "$DESTDIR/usr/lib/libtls.so"
+    mkdir -p "$DESTDIR/usr/lib/libressl"
+    ln -s "../$_ssl" "$DESTDIR/usr/lib/libressl/libssl.so"
+    ln -s "../$_crypto" "$DESTDIR/usr/lib/libressl/libcrypto.so"
+    ln -s "../$_tls" "$DESTDIR/usr/lib/libressl/libtls.so"
+
+    mkdir -p "$DESTDIR/usr/lib/libressl/pkgconfig"
+    mv "$DESTDIR/usr/lib/pkgconfig/"*.pc "$DESTDIR/usr/lib/libressl/pkgconfig/"
+    rmdir "$DESTDIR/usr/lib/pkgconfig" 2>/dev/null || :
+}

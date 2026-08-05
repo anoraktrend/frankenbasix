@@ -12,8 +12,8 @@ dist_files="https://static.rust-lang.org/dist/rustc-${version}-src.tar.xz"
 checksum="c8f492b93a95d64efb51fbcc5eab1e8edc1468a3f5be923c756b69d66892161a"
 wrk_src="rustc-$version-src"
 
-depends="gcc zlib"
-host_make_depends="rust-bootstrap cmake samurai python gcc"
+depends="gcc zlib libressl"
+host_make_depends="rust-bootstrap cmake samurai python gcc libressl"
 
 # rustc links against its own std, stripping the toolchain is not supported
 no_strip=yes
@@ -21,7 +21,9 @@ no_strip=yes
 # 0001-dynamic-musl-by-default.patch (applied by bpm) flips
 # crt_static_default in the x86_64-unknown-linux-musl target so binaries link
 # against the shared musl, files/config.toml enforces the same for every
-# stage of this build and points at /usr for the system musl
+# stage of this build and points at /usr for the system musl. cargo links
+# against libressl (the vendored openssl-sys rejects openssl 4.x), enforced
+# by the OPENSSL_* exports in do_build
 
 do_build() {
     # the prebuilt musl toolchain from rust-bootstrap, keep the version in
@@ -29,6 +31,12 @@ do_build() {
     _boot=/usr/lib/rust$version
     [ -x "$_boot/bin/rustc" ] || \
         die "no rust$version bootstrap toolchain, run: bpm install rust-bootstrap"
+
+    # link cargo against libressl: openssl-sys supports LibreSSL 3.5-4.2.x
+    # but rejects openssl 4.x. OPENSSL_LIB_DIR holds the libssl.so dev
+    # symlinks (/usr/lib/libressl), the headers are under /usr/include/libressl
+    export OPENSSL_LIB_DIR=/usr/lib/libressl
+    export OPENSSL_INCLUDE_DIR=/usr/include/libressl
 
     cp "$FILESDIR/config.toml" config.toml
 
