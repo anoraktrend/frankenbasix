@@ -1,0 +1,40 @@
+# rustc + cargo + rust-src built from source; the src tarball carries the
+# crates.io registry under vendor/ and llvm-project under src/, so the build
+# never touches the network
+pkg_name=rust
+version=1.93.1
+revision=1
+build_style=custom
+short_desc="Rust programming language toolchain"
+home_page="https://www.rust-lang.org"
+license="MIT, Apache-2.0"
+dist_files="https://static.rust-lang.org/dist/rustc-${version}-src.tar.xz"
+checksum="c8f492b93a95d64efb51fbcc5eab1e8edc1468a3f5be923c756b69d66892161a"
+wrk_src="rustc-$version-src"
+
+depends="gcc zlib"
+host_make_depends="rust-bootstrap cmake samurai python gcc"
+
+# rustc links against its own std, stripping the toolchain is not supported
+no_strip=yes
+
+# 0001-dynamic-musl-by-default.patch (applied by bpm) flips
+# crt_static_default in the x86_64-unknown-linux-musl target so binaries link
+# against the shared musl, files/config.toml enforces the same for every
+# stage of this build and points at /usr for the system musl
+
+do_build() {
+    # the prebuilt musl toolchain from rust-bootstrap, keep the version in
+    # sync with the one above
+    _boot=/usr/lib/rust$version
+    [ -x "$_boot/bin/rustc" ] || \
+        die "no rust$version bootstrap toolchain, run: bpm install rust-bootstrap"
+
+    cp "$FILESDIR/config.toml" config.toml
+
+    ./x.py build --stage 2 --jobs "${make_jobs#-j}"
+}
+
+do_install() {
+    DESTDIR="$DESTDIR" ./x.py install --stage 2 --prefix=/usr --sysconfdir=/etc
+}

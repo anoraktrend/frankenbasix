@@ -1,0 +1,11 @@
+--- a/compiler/rustc_target/src/spec/targets/x86_64_unknown_linux_musl.rs
++++ b/compiler/rustc_target/src/spec/targets/x86_64_unknown_linux_musl.rs
+@@ -19,7 +19,7 @@ pub(crate) fn target() -> Target {
+     base.supports_xray = true;
+-    // FIXME(compiler-team#422): musl targets should be dynamically linked by default.
+-    base.crt_static_default = true;
++    // frankenbasix ships musl as a shared library, so default to dynamically
++    // linked binaries instead of the portable static default.
++    base.crt_static_default = false;
+ 
+     Target {

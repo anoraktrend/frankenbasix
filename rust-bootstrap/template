@@ -1,0 +1,31 @@
+# prebuilt musl rustc + cargo + std, the seed the rust template builds from;
+# installed under a versioned sysroot (/usr/lib/rust<version>) so it never
+# owns /usr/bin/rustc or conflicts with a real rust install, in the layout
+# --local-rust-root expects (bin/ and lib/ at the root)
+pkg_name=rust-bootstrap
+version=1.93.1
+revision=1
+build_style=custom
+short_desc="Bootstrap Rust toolchain, prebuilt musl binaries"
+home_page="https://www.rust-lang.org"
+license="MIT, Apache-2.0"
+dist_files="https://static.rust-lang.org/dist/rust-${version}-x86_64-unknown-linux-musl.tar.gz"
+checksum="e893601b26ac43a2496207f071c3d85b8206e455f0958cd0f943ddbd8b921698"
+wrk_src="rust-${version}-x86_64-unknown-linux-musl"
+
+# rustc links against its own std, stripping the toolchain is not supported
+no_strip=yes
+
+do_install() {
+    bmkdir "/usr/lib/rust$version"
+
+    cp -pPR \
+        "$build_dir/$wrk_src/rustc/bin" \
+        "$build_dir/$wrk_src/cargo/bin" \
+        "$DESTDIR/usr/lib/rust$version"
+
+    cp -pPR \
+        "$build_dir/$wrk_src/rustc/lib" \
+        "$build_dir/$wrk_src/rust-std-x86_64-unknown-linux-musl/lib" \
+        "$DESTDIR/usr/lib/rust$version"
+}

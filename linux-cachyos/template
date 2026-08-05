@@ -1,0 +1,89 @@
+# place your kernel configuration at files/dotconfig
+# this is run through 'make olddefconfig' so a config from an older
+# release is probably chill
+pkg_name=linux-cachyos
+version=7.1.6
+revision=1
+build_style=custom
+short_desc="The Linux kernel (CachyOS variant)"
+home_page="https://github.com/CachyOS/linux"
+license="GPL-2.0-only"
+dist_files="https://github.com/CachyOS/linux/releases/download/cachyos-${version}-1/cachyos-${version}-1.tar.gz"
+checksum="2f7bf8c2c63581f998e4295f03c7c6160a2d18714d92b3a8e12155ceeb41790f"
+wrk_src="cachyos-$version-1"
+
+# bison and flex build kconfig, libelf builds objtool, openssl signs modules
+# and builds the trusted keyring, perl is used by several scripts, zstd
+# compresses the modules, rust + rust-bindgen are the RUST=y toolchain
+host_make_depends="bison flex libelf openssl perl python clang llvm lld zstd rust rust-bindgen"
+
+use_flags="modules debug"
+use_default="+modules -debug"
+
+# vmlinuz is a compressed image and modules carry relocations, stripping
+# either of them produces something that does not boot or does not load
+no_strip=yes
+
+# Clang ThinLTO build flags
+export CC=clang
+export LD=ld.lld
+export LLVM=1
+export LLVM_IAS=1
+
+do_configure() {
+    [ -f "$FILESDIR/dotconfig" ] || die "no kernel config at files/dotconfig"
+    cp -f "$FILESDIR/dotconfig" .config
+
+    # what linux-cachyos/PKGBUILD prepare() does to the stock config, with
+    # the defaults it ships with (EEVDF+BORE sched, ThinLTO, 1000Hz, full
+    # tickless, full preempt, native march, CACHY, -O3)
+    scripts/config \
+        -d GENERIC_CPU -d MZEN4 -e X86_NATIVE_CPU \
+        -e CACHY \
+        -e SCHED_BORE \
+        -e LTO_CLANG_THIN \
+        -d HZ_300 -e HZ_1000 --set-val HZ 1000 \
+        -d HZ_PERIODIC -d NO_HZ_IDLE -d CONTEXT_TRACKING_FORCE \
+        -e NO_HZ_FULL_NODEF -e NO_HZ_FULL -e NO_HZ -e NO_HZ_COMMON -e CONTEXT_TRACKING \
+        -e PREEMPT -d PREEMPT_LAZY \
+        -d CC_OPTIMIZE_FOR_PERFORMANCE -e CC_OPTIMIZE_FOR_PERFORMANCE_O3
+
+    # pahole does not exist in basix, DEBUG_INFO_BTF would fail the build
+    scripts/config -d DEBUG_INFO_BTF -d DEBUG_INFO_BTF_MODULES
+
+    # what PKGBUILD prepare() writes into localversion.*; the release string
+    # ends up as 7.1.6-1-cachyos
+    printf '%s\n' '-1' > localversion.10-pkgrel
+    printf '%s\n' '-cachyos' > localversion.20-pkgname
+
+    # accept defaults for anything the config predates without prompting
+    $make_cmd olddefconfig
+}
+
+do_build() {
+    $make_cmd $make_jobs
+    if use modules; then
+        $make_cmd $make_jobs modules
+    fi
+}
+
+do_install() {
+    # the module directory is named after the full release, which includes
+    # the localversion files, so check rather than assuming $version
+    _rel=$($make_cmd -s kernelrelease)
+
+    binstall arch/x86/boot/bzImage 0644 /boot "vmlinuz-$_rel"
+    binstall System.map            0644 /boot "System.map-$_rel"
+    binstall .config               0644 /boot "config-$_rel"
+
+    if use modules; then
+        $make_cmd INSTALL_MOD_PATH="$DESTDIR/usr" modules_install
+        # These point into the build tree, which will not exist.
+        rm -f "$DESTDIR/usr/lib/modules/$_rel/build" \
+              "$DESTDIR/usr/lib/modules/$_rel/source"
+    fi
+
+    if use debug; then
+        binstall vmlinux 0644 /usr/lib/debug/boot "vmlinux-$_rel"
+    fi
+}
