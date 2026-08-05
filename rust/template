@@ -13,7 +13,7 @@ checksum="c8f492b93a95d64efb51fbcc5eab1e8edc1468a3f5be923c756b69d66892161a"
 wrk_src="rustc-$version-src"
 
 depends="gcc zlib libressl llvm llvm-binutils clang sccache"
-host_make_depends="rust-bootstrap cmake samurai python gcc libressl sccache zlib llvm llvm-binutils clang"
+host_make_depends="rust-bootstrap cmake samurai python gcc libressl sccache zlib llvm llvm-binutils clang git"
 
 # rustc links against its own std, stripping the toolchain is not supported
 no_strip=yes
