@@ -1,0 +1,25 @@
+# sccache - shared compilation cache for rustc and C/C++ compilers. The rust
+# package uses it because bpm wipes the package build dir on every run, so
+# LLVM and the whole crate graph would be rebuilt from scratch each time; the
+# cache lives at /var/cache/bpm/build/sccache which survives the wipes (only
+# /var/cache/bpm/build/<pkg> is removed).
+# Ships the upstream static musl binary.
+pkg_name=sccache
+version=0.17.0
+revision=1
+build_style=custom
+short_desc="Shared compilation cache for rustc and C/C++ compilers"
+home_page="https://github.com/mozilla/sccache"
+license="Apache-2.0"
+dist_files="https://github.com/mozilla/sccache/releases/download/v${version}/sccache-v${version}-x86_64-unknown-linux-musl.tar.gz"
+checksum="7fd637b2347a84ee9aa77571e8a98ddbbee2eab3587e982682483a1c5be2f397"
+wrk_src="sccache-v${version}-x86_64-unknown-linux-musl"
+no_strip=yes
+
+do_build() {
+    :
+}
+
+do_install() {
+    install -Dm755 sccache "$DESTDIR/usr/bin/sccache"
+}

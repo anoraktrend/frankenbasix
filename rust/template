@@ -13,7 +13,7 @@ checksum="c8f492b93a95d64efb51fbcc5eab1e8edc1468a3f5be923c756b69d66892161a"
 wrk_src="rustc-$version-src"
 
 depends="gcc zlib libressl"
-host_make_depends="rust-bootstrap cmake samurai python gcc libressl"
+host_make_depends="rust-bootstrap cmake samurai python gcc libressl sccache"
 
 # rustc links against its own std, stripping the toolchain is not supported
 no_strip=yes
@@ -38,11 +38,24 @@ do_build() {
     export OPENSSL_LIB_DIR=/usr/lib/libressl
     export OPENSSL_INCLUDE_DIR=/usr/include/libressl
 
+    # cache the whole build in sccache: the build dir is wiped by bpm on
+    # every run, so without a cache the 30+ min LLVM and crate builds repeat
+    # each time. bootstrap only wraps stage0 rustc itself, exporting
+    # RUSTC_WRAPPER makes cargo wrap every stage; C/C++ (LLVM) goes through
+    # the cc/c++ wrappers. incremental must stay off for sccache (see
+    # [rust] incremental = false in files/config.toml)
+    export RUSTC_WRAPPER=sccache
+    export CC="sccache cc"
+    export CXX="sccache c++"
+    export SCCACHE_DIR=/var/cache/bpm/build/sccache
+
     cp "$FILESDIR/config.toml" config.toml
 
     ./x.py build --stage 2 --jobs "${make_jobs#-j}"
 }
 
 do_install() {
-    DESTDIR="$DESTDIR" ./x.py install --stage 2 --prefix=/usr --sysconfdir=/etc
+    # prefix/sysconfdir come from the [install] section of files/config.toml,
+    # x.py install doesn't accept them as arguments
+    DESTDIR="$DESTDIR" ./x.py install --stage 2
 }
