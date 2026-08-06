@@ -1,6 +1,6 @@
 pkg_name=compiler-rt
 version=21.1.7
-revision=1
+revision=2
 build_style=cmake
 short_desc="LLVM compiler-rt runtime libraries (builtins)"
 home_page="https://compiler-rt.llvm.org"
@@ -28,4 +28,7 @@ configure_args="
 
 pre_configure() {
     configure_args="$configure_args -DCOMPILER_RT_DEFAULT_TARGET_TRIPLE=$(clang -dumpmachine)"
+    # builtins must live in clang's resource dir or clang falls back to the
+    # gcc toolchain's libgcc.a instead of linking libclang_rt.builtins
+    configure_args="$configure_args -DCOMPILER_RT_INSTALL_LIBDIR=$(clang -print-resource-dir)/lib/linux"
 }
