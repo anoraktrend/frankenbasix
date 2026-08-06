@@ -16,7 +16,7 @@ dist_files="https://static.crates.io/crates/bindgen-cli/bindgen-cli-${version}.c
 checksum="553d230420c015a365fdb538e3045568d8e1192058cfb75c128f42beefb4363e"
 wrk_src="bindgen-cli-$version"
 
-depends="clang"
+depends="llvm"
 host_make_depends="rust"
 
 do_build() {

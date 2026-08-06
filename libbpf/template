@@ -9,7 +9,7 @@ dist_files="https://github.com/libbpf/libbpf/archive/refs/tags/v${version}.tar.g
 checksum="5d105646b12bdd55878739affabfefc41f1063a9dab7cd5584d5c14a166b7899"
 depends="libelf"
 make_depends="libelf linux-headers zlib"
-host_make_depends="clang pkgconf"
+host_make_depends="llvm pkgconf"
 
 make_build_target="-C src"
 
