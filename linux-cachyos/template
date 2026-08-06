@@ -16,8 +16,9 @@ wrk_src="cachyos-$version-1"
 # and builds the trusted keyring, perl is used by several scripts, zstd
 # compresses the modules, rust + rust-bindgen are the RUST=y toolchain, bash
 # runs scripts/config (#!/usr/bin/env bash), and chimerautils supplies the
-# BSD coreutils the kbuild scripts expect
-host_make_depends="bash bison chimerautils flex libelf openssl perl python clang llvm llvm-binutils zstd rust rust-bindgen"
+# BSD coreutils the kbuild scripts expect; m4 must unpack after chimerautils,
+# whose BSD m4 would otherwise shadow the GNU one bison needs
+host_make_depends="bash bison chimerautils m4 flex libelf openssl perl python clang llvm llvm-binutils zstd rust rust-bindgen"
 
 use_flags="modules debug"
 use_default="+modules -debug"
