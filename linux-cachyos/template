@@ -14,9 +14,10 @@ wrk_src="cachyos-$version-1"
 
 # bison and flex build kconfig, libelf builds objtool, openssl signs modules
 # and builds the trusted keyring, perl is used by several scripts, zstd
-# compresses the modules, rust + rust-bindgen are the RUST=y toolchain, and
-# bash runs scripts/config which has a #!/usr/bin/env bash shebang
-host_make_depends="bash bison flex libelf openssl perl python clang llvm llvm-binutils zstd rust rust-bindgen"
+# compresses the modules, rust + rust-bindgen are the RUST=y toolchain, bash
+# runs scripts/config (#!/usr/bin/env bash), and chimerautils supplies the
+# BSD coreutils the kbuild scripts expect
+host_make_depends="bash bison chimerautils flex libelf openssl perl python clang llvm llvm-binutils zstd rust rust-bindgen"
 
 use_flags="modules debug"
 use_default="+modules -debug"
