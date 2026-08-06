@@ -55,6 +55,11 @@ do_configure() {
     # pahole does not exist in basix, DEBUG_INFO_BTF would fail the build
     scripts/config -d DEBUG_INFO_BTF -d DEBUG_INFO_BTF_MODULES
 
+    # clang 21 codegen trips kernel 7.1.6's objtool decoder on some
+    # alternatives-heavy objects ("special: can't find orig instruction"),
+    # so skip objtool/ORC and unwind with frame pointers instead
+    scripts/config -d STACK_VALIDATION -d UNWINDER_ORC -e UNWINDER_FRAME_POINTER
+
     # what PKGBUILD prepare() writes into localversion.*; the release string
     # ends up as 7.1.6-1-cachyos
     printf '%s\n' '-1' > localversion.10-pkgrel
