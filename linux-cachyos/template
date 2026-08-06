@@ -15,7 +15,7 @@ wrk_src="cachyos-$version-1"
 # bison and flex build kconfig, libelf builds objtool, openssl signs modules
 # and builds the trusted keyring, perl is used by several scripts, zstd
 # compresses the modules, rust + rust-bindgen are the RUST=y toolchain
-host_make_depends="bison flex libelf openssl perl python clang llvm lld zstd rust rust-bindgen"
+host_make_depends="bison flex libelf openssl perl python clang llvm llvm-binutils zstd rust rust-bindgen"
 
 use_flags="modules debug"
 use_default="+modules -debug"
