@@ -11,7 +11,9 @@ patch_args="-p1"
 
 depends="zlib"
 make_depends="zlib"
-host_make_depends="cmake python clang"
+# no clang in make_depends: core's clang depends on llvm, which would cycle;
+# the first bootstrap builds with gcc
+host_make_depends="cmake python"
 
 provides="binutils"
 conflicts="binutils"
