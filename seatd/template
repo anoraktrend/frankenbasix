@@ -1,0 +1,27 @@
+pkg_name=seatd
+version=0.9.3
+revision=1
+build_style=meson
+short_desc="Minimal seat management daemon and seat abstraction library"
+home_page="https://sr.ht/~kennylevinsen/seatd/"
+license="MIT"
+dist_files="https://git.sr.ht/~kennylevinsen/seatd/archive/${version}.tar.gz"
+checksum="c1653dc2766e90c1fa606869f527085d939e13a84369bfad0f6762deeada152c"
+wrk_src="seatd-$version"
+host_make_depends="meson pkgconf samurai scdoc"
+
+use_flags="systemd"
+use_default="+systemd"
+
+depends="$(use_if systemd systemd)"
+make_depends="$(use_if systemd systemd)"
+
+system_groups="seat"
+
+configure_args="
+    $(use_if systemd -Dlibseat-logind=systemd -Dlibseat-logind=disabled)
+    -Dman-pages=enabled"
+
+post_install() {
+    binstall "$SOURCEDIR/contrib/systemd/seatd.service" 0644 /usr/lib/systemd/system
+}
