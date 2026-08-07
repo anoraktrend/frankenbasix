@@ -1,6 +1,6 @@
 pkg_name=bpm-sccache
 version=1
-revision=1
+revision=2
 build_style=custom
 short_desc="bpm extension: optional sccache wrapping for builds (bpm_sccache=1)"
 license="MIT"

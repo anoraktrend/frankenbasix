@@ -18,6 +18,10 @@ bpm_sccache_setup() {
 
     case "${CC:-}" in sccache\ *) ;; *) CC="sccache ${CC:-cc}"; export CC ;; esac
     case "${CXX:-}" in sccache\ *) ;; *) CXX="sccache ${CXX:-c++}"; export CXX ;; esac
+    # cmake derives CMAKE_ASM_COMPILER from the first token of CC, which would
+    # leave the bare "sccache" running the assembler compiles and reject their
+    # -D flags; wrap ASM the same way (cmake honors the ASM env var)
+    case "${ASM:-}" in sccache\ *) ;; *) ASM="sccache ${ASM:-cc}"; export ASM ;; esac
 
     # a bare RUSTC_WRAPPER="sccache" makes cargo invoke `sccache rustc`
     [ -n "${RUSTC_WRAPPER:-}" ] || { RUSTC_WRAPPER=sccache; export RUSTC_WRAPPER; }
