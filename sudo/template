@@ -1,6 +1,6 @@
 pkg_name=sudo
 version=1.9.17p2
-revision=1
+revision=2
 build_style=gnu-configure
 short_desc="Allow others to run commands as root"
 home_page="https://www.sudo.ws"
@@ -25,3 +25,8 @@ configure_args="
     --with-secure-path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     $(use_with pam)
     $(use_enable openssl)"
+
+post_install() {
+    binstall "$FILESDIR/sudo" 0644 /etc/pam.d
+    binstall "$FILESDIR/sudo-i" 0644 /etc/pam.d
+}
