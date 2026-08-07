@@ -1,0 +1,37 @@
+#!/bin/sh
+# bpm-use-depends: patch tmpl_load so use_depends folds into depends
+# idempotent; re-fires when bpm itself is reinstalled or updated
+set -eu
+
+case ${1:-} in
+    bpm|bpm-use-depends) ;;
+    *) exit 0 ;;
+esac
+
+_f=$2/usr/lib/bpm/common.sh
+[ -f "$_f" ] || exit 0
+
+grep -qF 'use_depends_resolve' "$_f" && exit 0
+
+# 1. fold use_depends into depends right after the template is sourced
+_l=$(grep -nF '    . "$tmpl_dir/template"' "$_f" | head -n1 | cut -d: -f1)
+[ -n "$_l" ] || exit 0
+{
+    head -n "$_l" "$_f"
+    printf '%s\n' '    if [ -f "$BPM_LIBDIR/use-depends.sh" ]; then . "$BPM_LIBDIR/use-depends.sh"; use_depends_resolve; fi'
+    tail -n +"$((_l + 1))" "$_f"
+} > "$_f.new"
+cat "$_f.new" > "$_f"
+rm -f "$_f.new"
+
+# 2. use_depends is a template var: let tmpl_clear unset it between loads
+_l=$(grep -nF " system_accounts system_groups'" "$_f" | head -n1 | cut -d: -f1)
+if [ -n "$_l" ]; then
+    {
+        head -n "$((_l - 1))" "$_f"
+        printf '%s\n' " system_accounts system_groups use_depends'"
+        tail -n +"$((_l + 1))" "$_f"
+    } > "$_f.new"
+    cat "$_f.new" > "$_f"
+    rm -f "$_f.new"
+fi

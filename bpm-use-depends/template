@@ -1,0 +1,13 @@
+pkg_name=bpm-use-depends
+version=1
+revision=1
+build_style=custom
+short_desc="bpm extension: use_depends=\"flag:pkg, ...\" conditional depends"
+home_page="https://github.com/kkrruumm/bpm"
+license="MIT"
+depends="bpm"
+
+do_install() {
+    binstall "$FILESDIR/use-depends.sh" 0644 /usr/lib/bpm
+    binstall "$FILESDIR/00-bpm-use-depends" 0755 /etc/bpm/hooks/post-install
+}
