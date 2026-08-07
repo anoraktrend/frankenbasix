@@ -1,6 +1,6 @@
 pkg_name=llvm
 version=21.1.7
-revision=3
+revision=4
 build_style=cmake
 short_desc="LLVM toolchain: clang, lld, clang-tools-extra, compiler-rt, libc++, libunwind"
 home_page="https://llvm.org"
@@ -69,4 +69,11 @@ pre_configure() {
         -DLLVM_TARGETS_TO_BUILD=$_targets
         -DLLVM_HOST_TRIPLE=$(${CC:-cc} -dumpmachine)
         -DCOMPILER_RT_INSTALL_LIBDIR=lib/clang/${version%%.*}/lib/linux"
+}
+
+post_install() {
+    if [ -d "$DESTDIR/usr/lib/x86_64-pc-linux-musl" ]; then
+        mv "$DESTDIR"/usr/lib/x86_64-pc-linux-musl/* "$DESTDIR/usr/lib/"
+        rmdir "$DESTDIR/usr/lib/x86_64-pc-linux-musl"
+    fi
 }

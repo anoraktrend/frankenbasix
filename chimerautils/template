@@ -1,6 +1,6 @@
 pkg_name=chimerautils
 version=15.0.3
-revision=3
+revision=4
 build_style=meson
 short_desc="Chimera Linux core userland: BSD tools coreutils replacement"
 home_page="https://github.com/chimera-linux/chimerautils"
@@ -32,7 +32,7 @@ configure_args="
 pre_configure() {
     export CC=clang
     export CXX=clang++
-    export CFLAGS="--rtlib=compiler-rt $CFLAGS"
-    export CXXFLAGS="--rtlib=compiler-rt $CXXFLAGS"
+    export CFLAGS="--rtlib=compiler-rt -unwindlib=libunwind $CFLAGS"
+    export CXXFLAGS="--rtlib=compiler-rt -unwindlib=libunwind $CXXFLAGS"
     export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 }
