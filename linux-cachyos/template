@@ -16,11 +16,14 @@ wrk_src="cachyos-$version-1"
 # and builds the trusted keyring, perl is used by several scripts, zstd
 # compresses the modules, rust + rust-bindgen are the RUST=y toolchain, bash
 # runs scripts/config (#!/usr/bin/env bash), and chimerautils supplies the
-# BSD coreutils the kbuild scripts expect. chimerautils must unpack before
-# bison: it owns /usr/bin/m4 (BSD), and GNU m4 arriving later in the same
-# path is what bison's m4sugar skeletons require. llvm supplies clang, lld,
-# the llvm binutils, and libclang_rt.builtins.
-host_make_depends="bash chimerautils m4 bison flex libelf openssl perl python llvm zstd rust rust-bindgen"
+# BSD coreutils the kbuild scripts expect. coreutils (GNU) must unpack right
+# after chimerautils: kbuild's shell scripts assume GNU semantics in sort,
+# expr, od and stat that the BSD versions lack, and in a shared /usr/bin
+# the later unpack wins. chimerautils must unpack before bison: it owns
+# /usr/bin/m4 (BSD), and GNU m4 arriving later in the same path is what
+# bison's m4sugar skeletons require. llvm supplies clang, lld, the llvm
+# binutils, and libclang_rt.builtins.
+host_make_depends="bash chimerautils coreutils m4 bison flex libelf openssl perl python llvm zstd rust rust-bindgen"
 
 use_flags="modules debug"
 use_default="+modules -debug"

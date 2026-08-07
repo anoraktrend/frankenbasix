@@ -1,0 +1,20 @@
+# GNU coreutils, built for the linux-cachyos buildroot only: kbuild's shell
+# scripts assume GNU semantics in sort, expr, od, stat and friends that the
+# BSD coreutils (chimerautils) don't provide. Declared as a host_make_depends
+# of linux-cachyos so it never lands on the host; conflicts with chimerautils
+# keeps an accidental 'bpm install coreutils' from clobbering the base system.
+# release tarballs ship the generated man pages, no help2man needed
+pkg_name=coreutils
+version=9.11
+revision=1
+build_style=gnu-configure
+short_desc="GNU core utilities"
+home_page="https://www.gnu.org/software/coreutils/"
+license="GPL-3.0-or-later"
+dist_files="https://mirrors.edge.kernel.org/gnu/coreutils/coreutils-${version}.tar.xz"
+checksum="6f3243a4dfc498c2f5ec8c550d4a83a7f94ead7a2c743ca1b314c1b74da8125d"
+conflicts="chimerautils"
+
+# no nls (no gettext on the base system), no selinux (musl), no libgmp
+# (keeps the runtime dependency set empty)
+configure_args="--disable-nls --without-selinux --without-libgmp"
