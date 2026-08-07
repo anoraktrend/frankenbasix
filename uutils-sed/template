@@ -10,4 +10,10 @@ checksum="0c112ecf8a2b717079675a98a3fcf04f0707ad1398c4bf76f875c4e628c7f49b"
 wrk_src="sed-${version}"
 depends=""
 host_make_depends="rust"
+make_depends="certs"
 allow_network=yes
+
+pre_build() {
+    # cargo's bundled libcurl needs a CA bundle in the buildroot chroot
+    export SSL_CERT_FILE=/etc/ssl/cert.pem
+}

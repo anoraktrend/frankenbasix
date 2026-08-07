@@ -1,0 +1,53 @@
+pkg_name=ca-certificates
+version=2026-07-16
+revision=1
+build_style=custom
+short_desc="Mozilla CA certificate bundle with hashed openssl symlinks"
+home_page="https://curl.se/docs/caextract.html"
+license="MPL-2.0"
+dist_files="https://curl.se/ca/cacert-${version}.pem"
+checksum="1ad51acf4f09d35e1ab31ae36a21547ad980dbc06dd4914e69bd24efcb5b0503"
+host_make_depends="openssl"
+provides="certs"
+conflicts="certs"
+
+do_build() {
+    rm -rf certs && mkdir certs
+
+    # split the bundle into individual numbered certs; the counter file name
+    # keeps bundle order so the concatenated crt matches the source order
+    awk '
+    /^-----BEGIN CERTIFICATE-----$/ {
+        n++
+        f = sprintf("certs/%04d.pem", n)
+        print > f
+        next
+    }
+    n > 0 { print >> f }
+    ' "cacert-$version.pem"
+
+    for f in certs/*.pem; do
+        h=$(openssl x509 -hash -noout -in "$f")
+        l="certs/$h.0"
+        j=0
+        while [ -e "$l" ]; do
+            j=$((j + 1))
+            l="certs/$h.$j"
+        done
+        ln -s "${f##*/}" "$l"
+    done
+
+    cat certs/*.pem > ca-certificates.crt
+}
+
+do_install() {
+    bmkdir -m 0755 /etc/ssl/certs
+    for f in certs/*.pem; do
+        binstall "$f" 0644 /etc/ssl/certs
+    done
+    for l in certs/*.[0-9]; do
+        bln "$(basename "$(readlink "$l")")" "/etc/ssl/certs/$(basename "$l")"
+    done
+    binstall ca-certificates.crt 0644 /etc/ssl/certs
+    binstall ca-certificates.crt 0644 /etc/ssl cert.pem
+}

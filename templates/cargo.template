@@ -12,4 +12,11 @@ license=""
 dist_files=""
 checksum=""
 depends=""
+# certs provides /etc/ssl/cert.pem for cargo's crates.io TLS in the buildroot
+make_depends="certs"
 allow_network=no
+
+# every cargo build fetches crates; uncomment and add your exports when needed
+# pre_build() {
+#     export SSL_CERT_FILE=/etc/ssl/cert.pem
+# }
