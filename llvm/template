@@ -1,6 +1,6 @@
 pkg_name=llvm
 version=21.1.7
-revision=5
+revision=6
 build_style=cmake
 short_desc="LLVM toolchain: clang, lld, clang-tools-extra, compiler-rt, libc++, libunwind"
 home_page="https://llvm.org"
@@ -14,7 +14,8 @@ depends="zlib"
 make_depends="zlib"
 # no clang in make_depends: core's clang depends on llvm, which would cycle;
 # the first bootstrap builds with gcc
-host_make_depends="cmake python"
+host_make_depends="cmake python sccache"
+bpm_sccache=1
 
 provides="binutils"
 conflicts="binutils"
