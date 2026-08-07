@@ -31,8 +31,8 @@ do_build() {
 do_install() {
     binstall target/release/greetd 0755 /usr/bin
     binstall target/release/agreety 0755 /usr/bin
-    binstall "$SOURCEDIR/config.toml" 0644 /etc/greetd
-    binstall "$SOURCEDIR/greetd.service" 0644 /usr/lib/systemd/system
+    binstall config.toml 0644 /etc/greetd
+    binstall greetd.service 0644 /usr/lib/systemd/system
     binstall "$FILESDIR/greetd" 0644 /etc/pam.d
     binstall greetd.1 0644 /usr/share/man/man1
     binstall agreety.1 0644 /usr/share/man/man1

@@ -23,5 +23,5 @@ configure_args="
     -Dman-pages=enabled"
 
 post_install() {
-    binstall "$SOURCEDIR/contrib/systemd/seatd.service" 0644 /usr/lib/systemd/system
+    binstall contrib/systemd/seatd.service 0644 /usr/lib/systemd/system
 }
