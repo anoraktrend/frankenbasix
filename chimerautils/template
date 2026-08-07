@@ -1,6 +1,6 @@
 pkg_name=chimerautils
 version=15.0.3
-revision=2
+revision=3
 build_style=meson
 short_desc="Chimera Linux core userland: BSD tools coreutils replacement"
 home_page="https://github.com/chimera-linux/chimerautils"
@@ -9,7 +9,7 @@ dist_files="https://github.com/chimera-linux/chimerautils/archive/refs/tags/v${v
 checksum="99328cd8e8481a7a5ca8a3af86df5d353e4045b5e57aff09531650d43b46cf96"
 depends="acl attr bzip2 libedit libxo linux-pam ncurses openssl xz zlib zstd"
 make_depends="acl attr bzip2 libedit libxo linux-pam ncurses openssl xz zlib zstd"
-host_make_depends="bison flex meson pkgconf samurai"
+host_make_depends="bison flex llvm meson pkgconf samurai"
 
 use_flags="color_ls openssl libedit zlib lzma bzip2 zstd pam tiny chimera_realpath install-lib selinux"
 use_default="+color_ls +openssl +libedit +zlib +lzma +bzip2 +zstd +pam -tiny +chimera_realpath +install-lib -selinux"
@@ -28,3 +28,11 @@ configure_args="
     $(use_if chimera_realpath -Dchimera_realpath=enabled -Dchimera_realpath=disabled)
     $(use_bool install-lib)
     $(use_if selinux -Dselinux=enabled -Dselinux=disabled)"
+
+pre_configure() {
+    export CC=clang
+    export CXX=clang++
+    export CFLAGS="--rtlib=compiler-rt $CFLAGS"
+    export CXXFLAGS="--rtlib=compiler-rt $CXXFLAGS"
+    export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+}
