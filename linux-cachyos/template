@@ -3,7 +3,7 @@
 # release is probably chill
 pkg_name=linux-cachyos
 version=7.1.6
-revision=1
+revision=2
 build_style=custom
 short_desc="The Linux kernel (CachyOS variant)"
 home_page="https://github.com/CachyOS/linux"
@@ -34,6 +34,8 @@ export CC=clang
 export LD=ld.lld
 export LLVM=1
 export LLVM_IAS=1
+export HOSTCC=clang
+export HOSTLDFLAGS=-fuse-ld=lld
 
 do_configure() {
     [ -f "$FILESDIR/dotconfig" ] || die "no kernel config at files/dotconfig"
@@ -60,6 +62,13 @@ do_configure() {
     # alternatives-heavy objects ("special: can't find orig instruction"),
     # so skip objtool/ORC and unwind with frame pointers instead
     scripts/config -d STACK_VALIDATION -d UNWINDER_ORC -e UNWINDER_FRAME_POINTER
+
+    # clang 21 codegen also trips the IBT call-dest validation on modules
+    # ("objtool: can't find call dest symbol"), drop IBT for the same reason
+    scripts/config -d X86_KERNEL_IBT
+
+    # kheaders needs GNU tar (--owner=0); the base system only has busybox tar
+    scripts/config -d IKHEADERS
 
     # what PKGBUILD prepare() writes into localversion.*; the release string
     # ends up as 7.1.6-1-cachyos

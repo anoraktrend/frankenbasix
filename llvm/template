@@ -1,6 +1,6 @@
 pkg_name=llvm
 version=21.1.7
-revision=4
+revision=5
 build_style=cmake
 short_desc="LLVM toolchain: clang, lld, clang-tools-extra, compiler-rt, libc++, libunwind"
 home_page="https://llvm.org"
@@ -76,4 +76,8 @@ post_install() {
         mv "$DESTDIR"/usr/lib/x86_64-pc-linux-musl/* "$DESTDIR/usr/lib/"
         rmdir "$DESTDIR/usr/lib/x86_64-pc-linux-musl"
     fi
+    # llvm replaces binutils (provides/conflicts), so the clang driver's
+    # default linker name must exist; ld.lld accepts the GNU ld flags clang
+    # passes (also needed for kernel host tool links, e.g. modpost)
+    ln -s ld.lld "$DESTDIR/usr/sbin/ld"
 }
