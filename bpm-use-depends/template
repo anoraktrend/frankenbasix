@@ -1,6 +1,6 @@
 pkg_name=bpm-use-depends
 version=1
-revision=2
+revision=3
 build_style=custom
 short_desc="bpm extension: conditional use_depends/use_make_depends/use_host_make_depends"
 home_page="https://github.com/kkrruumm/bpm"

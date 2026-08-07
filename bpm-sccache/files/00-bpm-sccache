@@ -1,0 +1,48 @@
+#!/bin/sh
+# bpm-sccache: patch build_env (build.sh) and TMPL_VARS (common.sh) so that a
+# template opting in with bpm_sccache=1 gets CC/CXX/RUSTC_WRAPPER wrapped by
+# sccache from the shared cache at /var/cache/bpm/build/sccache.
+# idempotent; re-fires when bpm itself is reinstalled or updated
+set -eu
+
+case ${1:-} in
+    bpm|bpm-sccache) ;;
+    *) exit 0 ;;
+esac
+
+_libdir=${2:-/}/usr/lib/bpm
+
+# --- 1. source the env snippet at the end of build_env ---------------------
+_f=$_libdir/build.sh
+[ -f "$_f" ] || exit 0
+if ! grep -qF 'bpm_sccache_setup' "$_f"; then
+    _l=$(grep -nF 'export pkg_name version revision' "$_f" | head -n1 | cut -d: -f1)
+    if [ -n "$_l" ]; then
+        {
+            head -n "$_l" "$_f"
+            printf '%s\n' '    if have sccache; then . "$BPM_LIBDIR/sccache-env.sh"; bpm_sccache_setup; fi'
+            tail -n +"$((_l + 1))" "$_f"
+        } > "$_f.new"
+        cat "$_f.new" > "$_f"
+        rm -f "$_f.new"
+    fi
+fi
+
+# --- 2. bpm_sccache is a template var: clear it between loads --------------
+_c=$_libdir/common.sh
+[ -f "$_c" ] || exit 0
+if ! grep -qF 'bpm_sccache' "$_c"; then
+    _l=$(grep -nF 'system_accounts system_groups' "$_c" | head -n1 | cut -d: -f1)
+    if [ -n "$_l" ]; then
+        _line=$(sed -n "${_l}p" "$_c")
+        _line=${_line%?}
+        _line=${_line% }
+        {
+            head -n "$((_l - 1))" "$_c"
+            printf '%s\n' "$_line bpm_sccache'"
+            tail -n +"$((_l + 1))" "$_c"
+        } > "$_c.new"
+        cat "$_c.new" > "$_c"
+        rm -f "$_c.new"
+    fi
+fi

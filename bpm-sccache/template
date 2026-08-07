@@ -1,0 +1,12 @@
+pkg_name=bpm-sccache
+version=1
+revision=1
+build_style=custom
+short_desc="bpm extension: optional sccache wrapping for builds (bpm_sccache=1)"
+license="MIT"
+depends="bpm"
+
+do_install() {
+    binstall "$FILESDIR/sccache-env.sh" 0644 /usr/lib/bpm
+    binstall "$FILESDIR/00-bpm-sccache" 0755 /etc/bpm/hooks/post-install
+}

@@ -29,20 +29,23 @@ if [ "$_r" = 0 ]; then
 fi
 
 # 2. the use_depends family are template vars: let tmpl_clear unset them
-#    between loads. matches both the pristine line and the single-var patch
-#    shipped by bpm-use-depends rev 1
-_l=$(grep -nF " system_accounts system_groups'" "$_f" | head -n1 | cut -d: -f1)
-if [ -z "$_l" ]; then
-    _l=$(grep -nF " system_accounts system_groups use_depends'" "$_f" | head -n1 | cut -d: -f1)
-fi
+#    between loads. the anchor has no trailing quote so it matches the
+#    pristine line, the rev-1 single-var patch, and lines already extended
+#    by other extensions (e.g. bpm-sccache); the tail after system_groups is
+#    preserved so those extensions survive the rewrite
+_l=$(grep -nF ' system_accounts system_groups' "$_f" | head -n1 | cut -d: -f1)
 if [ -n "$_l" ]; then
     _line=$(sed -n "${_l}p" "$_f")
     _prefix=${_line%% system_accounts*}
-    {
-        head -n "$((_l - 1))" "$_f"
-        printf '%s\n' "$_prefix system_accounts system_groups use_depends use_make_depends use_host_make_depends'"
-        tail -n +"$((_l + 1))" "$_f"
-    } > "$_f.new"
-    cat "$_f.new" > "$_f"
-    rm -f "$_f.new"
+    _tail=${_line#*system_groups}
+    if ! printf '%s' "$_tail" | grep -qF 'use_host_make_depends'; then
+        _tail=${_tail# use_depends}
+        {
+            head -n "$((_l - 1))" "$_f"
+            printf '%s\n' "$_prefix system_accounts system_groups use_depends use_make_depends use_host_make_depends$_tail"
+            tail -n +"$((_l + 1))" "$_f"
+        } > "$_f.new"
+        cat "$_f.new" > "$_f"
+        rm -f "$_f.new"
+    fi
 fi
