@@ -79,5 +79,5 @@ post_install() {
     # llvm replaces binutils (provides/conflicts), so the clang driver's
     # default linker name must exist; ld.lld accepts the GNU ld flags clang
     # passes (also needed for kernel host tool links, e.g. modpost)
-    ln -s ld.lld "$DESTDIR/usr/sbin/ld"
+    ln -s ld.lld "$DESTDIR/usr/bin/ld"
 }
