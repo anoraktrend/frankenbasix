@@ -1,0 +1,14 @@
+pkg_name=pam-config
+version=1
+revision=1
+build_style=custom
+short_desc="Base PAM service configuration"
+home_page="https://github.com/linux-pam/linux-pam"
+license="public-domain"
+depends="linux-pam"
+
+do_install() {
+    binstall "$FILESDIR/other" 0644 /etc/pam.d
+    binstall "$FILESDIR/su" 0644 /etc/pam.d
+    binstall "$FILESDIR/login" 0644 /etc/pam.d
+}

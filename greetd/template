@@ -1,0 +1,41 @@
+pkg_name=greetd
+version=0.10.3
+revision=1
+build_style=custom
+short_desc="Minimal and flexible login manager daemon"
+home_page="https://sr.ht/~kennylevinsen/greetd/"
+license="GPL-3.0-only"
+dist_files="https://git.sr.ht/~kennylevinsen/greetd/archive/${version}.tar.gz"
+checksum="acf3f31550974bebce635ed84b6fabd21ee06fd12344d5fa993a5c5384724c8b"
+wrk_src="greetd-$version"
+depends="linux-pam"
+host_make_depends="rust scdoc"
+make_depends="certs"
+allow_network=yes
+
+system_accounts="greeter"
+greeter_descr="greetd greeter user"
+
+pre_build() {
+    export SSL_CERT_FILE=/etc/ssl/cert.pem
+}
+
+do_build() {
+    cargo build --release --locked
+    scdoc < man/greetd.1.scd > greetd.1
+    scdoc < man/greetd.5.scd > greetd.5
+    scdoc < man/agreety.1.scd > agreety.1
+    scdoc < man/greetd-ipc.7.scd > greetd-ipc.7
+}
+
+do_install() {
+    binstall target/release/greetd 0755 /usr/bin
+    binstall target/release/agreety 0755 /usr/bin
+    binstall "$SOURCEDIR/config.toml" 0644 /etc/greetd
+    binstall "$SOURCEDIR/greetd.service" 0644 /usr/lib/systemd/system
+    binstall "$FILESDIR/greetd" 0644 /etc/pam.d
+    binstall greetd.1 0644 /usr/share/man/man1
+    binstall agreety.1 0644 /usr/share/man/man1
+    binstall greetd.5 0644 /usr/share/man/man5
+    binstall greetd-ipc.7 0644 /usr/share/man/man7
+}

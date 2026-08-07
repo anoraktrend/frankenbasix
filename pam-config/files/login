@@ -1,0 +1,3 @@
+auth [success=ok ignore=ignore user_unknown=ignore default=die] pam_unix.so nullok
+account required pam_unix.so
+session required pam_unix.so

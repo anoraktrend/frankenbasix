@@ -1,0 +1,6 @@
+auth sufficient pam_succeed_if.so user = greeter
+auth required pam_unix.so
+account sufficient pam_succeed_if.so user = greeter
+account required pam_unix.so
+session sufficient pam_succeed_if.so user = greeter
+session required pam_unix.so
