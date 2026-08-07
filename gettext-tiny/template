@@ -1,0 +1,9 @@
+pkg_name=gettext-tiny
+version=0.3.3
+revision=1
+build_style=gnu-makefile
+short_desc="Tiny msgfmt/xgettext/msgmerge replacements and a no-op libintl"
+home_page="https://github.com/sabotage-linux/gettext-tiny"
+license="MIT"
+dist_files="https://ftp.barfooze.de/pub/sabotage/tarballs/gettext-tiny-${version}.tar.xz"
+checksum="ba7851c7aa1ce8d27b47a4e80f62de31996a4b7504046edbc0934fa408b0d97f"

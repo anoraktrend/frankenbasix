@@ -1,0 +1,28 @@
+pkg_name=fish
+version=4.8.1
+revision=1
+build_style=custom
+short_desc="Friendly interactive shell"
+home_page="https://fishshell.com/"
+license="GPL-2.0-only AND LGPL-2.0-or-later AND MIT AND PSF-2.0"
+dist_files="https://github.com/fish-shell/fish-shell/releases/download/${version}/fish-${version}.tar.xz"
+checksum="046f489708ca37ed7425478ac27820e8a871fcdfee412d9bcd7bcd9b8c97aed1"
+depends="pcre2"
+make_depends="certs pcre2"
+host_make_depends="gettext-tiny rust"
+allow_network=yes
+
+pre_build() {
+    export SSL_CERT_FILE=/etc/ssl/cert.pem
+}
+
+do_build() {
+    cargo build --release --locked
+}
+
+do_install() {
+    binstall target/release/fish 0755 /usr/bin
+    binstall target/release/fish_indent 0755 /usr/bin
+    binstall target/release/fish_key_reader 0755 /usr/bin
+    binstall share/config.fish 0644 /etc/fish
+}
