@@ -1,6 +1,6 @@
 pkg_name=llvm
 version=21.1.7
-revision=6
+revision=7
 build_style=cmake
 short_desc="LLVM toolchain: clang, lld, clang-tools-extra, compiler-rt, libc++, libunwind"
 home_page="https://llvm.org"
@@ -81,4 +81,12 @@ post_install() {
     # default linker name must exist; ld.lld accepts the GNU ld flags clang
     # passes (also needed for kernel host tool links, e.g. modpost)
     ln -s ld.lld "$DESTDIR/usr/bin/ld"
+
+    # binutils is gone but every GNU toolchain caller expects these names to
+    # exist; point them at the llvm equivalents (kbuild uses ar for the
+    # archives built into vmlinux; gcc needs ar when it's the system CC)
+    _b="$DESTDIR/usr/bin"
+    for _t in ar ranlib nm objcopy objdump readelf strip size addr2line; do
+        [ -e "$_b/$_t" ] || ln -s "llvm-$_t" "$_b/$_t"
+    done
 }
