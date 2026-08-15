@@ -1,0 +1,11 @@
+pkg_name=pbzip2
+version=1.1.13
+revision=1
+build_style=gnu-makefile
+short_desc="Parallel implementation of bzip2"
+home_page="https://launchpad.net/pbzip2"
+license="BSD-3-Clause"
+dist_files="https://launchpad.net/pbzip2/1.1/1.1.13/+download/pbzip2-1.1.13.tar.gz"
+checksum="a5e50120648cfa08084a8ee2ec3775b2eea916c542e7ad5a0fd114605b7b3c13"
+depends="bzip2"
+make_depends="bzip2"
