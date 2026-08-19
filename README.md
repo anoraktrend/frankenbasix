@@ -3,7 +3,12 @@
 a bunch of templates to make using basix nicer for me and other users.
 
 FrankenBasix is a spin of [basix-packages](https://github.com/kkrruumm/basix-packages),
-which uses the [bpm](https://github.com/kkrruumm/bpm) package manager.
+which uses the [bpm](https://github.com/kkrruumm/bpm) package manager (specifically, the [anoraktrend fork](https://github.com/anoraktrend/bpm)).
+
+## Documentation
+
+- **[TEMPLATES.md](TEMPLATES.md)** - Complete template system documentation
+- **[TEMPLATE-REFERENCE.md](TEMPLATE-REFERENCE.md)** - Quick reference cheat sheet
 
 ## FrankenBasix template guidelines
 
